@@ -7,79 +7,128 @@ import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 
 public class Hotkeys
 {
-    public static final ConfigHotkey ADD_SELECTION_BOX                  = new ConfigHotkey("addSelectionBox",                   "M,A",  "Add a new selection box (position 1) here");
-    public static final ConfigHotkey CLONE_SELECTION                    = new ConfigHotkey("cloneSelection",                    "",     "Quickly clone the current area selection.\nThis basically just creates an in-memory-only schematic,\nand then creates a placement of that schematic and selects it,\nand also switches the tool mode to the Paste mode.");
-    public static final ConfigHotkey DELETE_SELECTION_BOX               = new ConfigHotkey("deleteSelectionBox",                "",     "Delete the currently selected box");
-    public static final ConfigHotkey EASY_PLACE_ACTIVATION              = new ConfigHotkey("easyPlaceUseKey",                   "BUTTON_2", KeybindSettings.PRESS_ALLOWEXTRA, "When the easyPlaceMode is enabled, this key is used for placing the blocks");
-    public static final ConfigHotkey EASY_PLACE_TOGGLE                  = new ConfigHotkey("easyPlaceToggle",                   "",     "Allows quickly toggling on/off the Easy Place mode");
-    public static final ConfigHotkey EXECUTE_OPERATION                  = new ConfigHotkey("executeOperation",                  "",     "Execute the currently selected tool operation with the\ncurrent selection or placement in the Fill, Replace,\nPaste Schematic etc. modes");
-    public static final ConfigHotkey INVERT_GHOST_BLOCK_RENDER_STATE    = new ConfigHotkey("invertGhostBlockRenderState",       "",     "Inverts the schematic/ghost block rendering status\nwhile this keybind is held down");
-    public static final ConfigHotkey INVERT_OVERLAY_RENDER_STATE        = new ConfigHotkey("invertOverlayRenderState",          "",     "Inverts the Overlay rendering status while this keybind is held down");
-    public static final ConfigHotkey LAYER_MODE_NEXT                    = new ConfigHotkey("layerModeNext",                     "M,PAGE_UP",    "Cycle the rendering mode (all, layers) forward");
-    public static final ConfigHotkey LAYER_MODE_PREVIOUS                = new ConfigHotkey("layerModePrevious",                 "M,PAGE_DOWN",  "Cycle the rendering mode (all, layers) backwards");
-    public static final ConfigHotkey LAYER_NEXT                         = new ConfigHotkey("layerNext",                         "PAGE_UP",      "Move the rendered layer selection up");
-    public static final ConfigHotkey LAYER_PREVIOUS                     = new ConfigHotkey("layerPrevious",                     "PAGE_DOWN",    "Move the rendered layer selection down");
-    public static final ConfigHotkey LAYER_SET_HERE                     = new ConfigHotkey("layerSetHere",                      "",     "Set the Render Layer to the player's current position");
-    public static final ConfigHotkey NUDGE_SELECTION_NEGATIVE           = new ConfigHotkey("nudgeSelectionNegative",            "",     "Nudge the current selection in the \"negative\" direction\nThis is basically the same as mouse wheel down\nwith the Nudge modifier pressed");
-    public static final ConfigHotkey NUDGE_SELECTION_POSITIVE           = new ConfigHotkey("nudgeSelectionPositive",            "",     "Nudge the current selection in the \"positive\" direction\nThis is basically the same as mouse wheel up\nwith the Nudge modifier pressed");
-    public static final ConfigHotkey MOVE_ENTIRE_SELECTION              = new ConfigHotkey("moveEntireSelection",               "",     "Move the entire current selection here");
-    public static final ConfigHotkey OPEN_GUI_AREA_SETTINGS             = new ConfigHotkey("openGuiAreaSettings",               "KP_MULTIPLY", "Open the Area Settings GUI for the currently selected area");
-    public static final ConfigHotkey OPEN_GUI_LOADED_SCHEMATICS         = new ConfigHotkey("openGuiLoadedSchematics",           "",     "Open the Loaded Schematic GUI");
-    public static final ConfigHotkey OPEN_GUI_MAIN_MENU                 = new ConfigHotkey("openGuiMainMenu",                   "M",    KeybindSettings.RELEASE_EXCLUSIVE, "Open the Litematica main menu");
-    public static final ConfigHotkey OPEN_GUI_MATERIAL_LIST             = new ConfigHotkey("openGuiMaterialList",               "M,L",  "Open the Material List GUI for the currently\nselected schematic placement");
-    public static final ConfigHotkey OPEN_GUI_PLACEMENT_SETTINGS        = new ConfigHotkey("openGuiPlacementSettings",          "KP_SUBTRACT", "Open the Placement Settings GUI for the currently\nselected placement or sub-region");
-    public static final ConfigHotkey OPEN_GUI_SCHEMATIC_PLACEMENTS      = new ConfigHotkey("openGuiSchematicPlacements",        "M,P",  "Open the Schematic Placements GUI");
-    public static final ConfigHotkey OPEN_GUI_SCHEMATIC_PROJECTS        = new ConfigHotkey("openGuiSchematicProjects",          "",     "Open the Schematic Projects GUI");
-    public static final ConfigHotkey OPEN_GUI_SCHEMATIC_VERIFIER        = new ConfigHotkey("openGuiSchematicVerifier",          "M,V",  "Open the Schematic Verifier GUI for the currently\nselected schematic placement");
-    public static final ConfigHotkey OPEN_GUI_SELECTION_MANAGER         = new ConfigHotkey("openGuiSelectionManager",           "M,S",  "Open the Area Selection manager GUI");
-    public static final ConfigHotkey OPEN_GUI_SETTINGS                  = new ConfigHotkey("openGuiSettings",                   "M,C",  "Open the Config GUI");
-    public static final ConfigHotkey OPERATION_MODE_CHANGE_MODIFIER     = new ConfigHotkey("operationModeChangeModifier",       "LEFT_CONTROL", KeybindSettings.MODIFIER_INGAME, "The modifier key to quickly change the operation mode.\nHold this and scroll while holding the \"tool item\" to quickly cycle the mode.");
-    public static final ConfigHotkey PICK_BLOCK_FIRST                   = new ConfigHotkey("pickBlockFirst",                    "BUTTON_3",     KeybindSettings.PRESS_ALLOWEXTRA, "A key to pick block the first\nschematic block ray traced to");
-    public static final ConfigHotkey PICK_BLOCK_LAST                    = new ConfigHotkey("pickBlockLast",                     "",             KeybindSettings.MODIFIER_INGAME, "A key to pick block the last schematic block\nray traced to, before the first (possible) client world\nblock ray traced to. Basically this would get\nyou the block you could place against an existing block.");
-    public static final ConfigHotkey PICK_BLOCK_TOGGLE                  = new ConfigHotkey("pickBlockToggle",                   "M,BUTTON_3",   "A hotkey to toggle the pick block toggle option in the\nGeneric configs. This is provided as a quick way to enable\nor disable the pick block keys, if they interfere with something.");
-    public static final ConfigHotkey RENDER_INFO_OVERLAY                = new ConfigHotkey("renderInfoOverlay",                 "I",            KeybindSettings.PRESS_ALLOWEXTRA, "The key that enables rendering the block info overlay.\nUse NONE for not requiring a key to be pressed.\nDisable the similarly named option in the Visuals\nconfigs to disable the overlay completely.");
-    public static final ConfigHotkey RENDER_OVERLAY_THROUGH_BLOCKS      = new ConfigHotkey("renderOverlayThroughBlocks",        "RIGHT_CONTROL", KeybindSettings.PRESS_ALLOWEXTRA, "A hotkey to allow the overlays to render through blocks.\nThis is just a quicker way to temporarily enable\nthe same thing that the 'schematicOverlayRenderThroughBlocks' option in Visuals does.");
-    public static final ConfigHotkey RERENDER_SCHEMATIC                 = new ConfigHotkey("rerenderSchematic",                 "F3,M", "Hotkey to refresh/redraw only the schematic, instead of\nhaving to refresh the vanilla terrain too with F3 + A");
-    public static final ConfigHotkey SAVE_AREA_AS_IN_MEMORY_SCHEMATIC   = new ConfigHotkey("saveAreaAsInMemorySchematic",       "",     "Save the current Area Selection as an in-memory Schematic");
-    public static final ConfigHotkey SAVE_AREA_AS_SCHEMATIC_TO_FILE     = new ConfigHotkey("saveAreaAsSchematicToFile",         "LEFT_CONTROL,LEFT_ALT,S",  "Save the current Area Selection as a Schematic to a file");
-    public static final ConfigHotkey SCHEMATIC_EDIT_BREAK_ALL_EXCEPT    = new ConfigHotkey("schematicEditBreakAllExcept",       "", KeybindSettings.MODIFIER_INGAME, "Modifier key to activate the \"break everything except\"\nmode/function in the Schematic Edit tool mode.\nBasically when you hold this key and punch a schematic block,\nall other blocks except this block will be removed from the schematic.");
-    public static final ConfigHotkey SCHEMATIC_EDIT_BREAK_ALL           = new ConfigHotkey("schematicEditBreakPlaceAll",        "", KeybindSettings.MODIFIER_INGAME, "Modifier key to activate the \"break all identical blocks\"\nfunction in the Schematic Edit tool mode");
-    public static final ConfigHotkey SCHEMATIC_EDIT_BREAK_DIRECTION     = new ConfigHotkey("schematicEditBreakPlaceDirection",  "", KeybindSettings.MODIFIER_INGAME, "Modifier key to activate the directional/continuous\nbreak or place function in the Schematic Edit tool mode");
-    public static final ConfigHotkey SCHEMATIC_EDIT_REPLACE_ALL         = new ConfigHotkey("schematicEditReplaceAll",           "", KeybindSettings.MODIFIER_INGAME, "Modifier key to activate the \"replace all identical\"\nreplace mode/function in the Schematic Edit tool mode");
-    public static final ConfigHotkey SCHEMATIC_EDIT_REPLACE_BLOCK       = new ConfigHotkey("schematicEditReplaceBlock",         "", KeybindSettings.MODIFIER_INGAME, "Modifier key to activate the \"replace block type\"\nreplace mode/function in the Schematic Edit tool mode");
-    public static final ConfigHotkey SCHEMATIC_EDIT_REPLACE_DIRECTION   = new ConfigHotkey("schematicEditReplaceDirection",     "", KeybindSettings.MODIFIER_INGAME, "Modifier key to activate the directional/continuous\nreplace mode/function in the Schematic Edit tool mode");
-    public static final ConfigHotkey SCHEMATIC_VERSION_CYCLE_MODIFIER   = new ConfigHotkey("schematicVersionCycleModifier",     "",     KeybindSettings.MODIFIER_INGAME, "The modifier key to hold to be able to use the mouse wheel\nto cycle through the schematic versions in the Version Control tool mode");
-    public static final ConfigHotkey SCHEMATIC_VERSION_CYCLE_NEXT       = new ConfigHotkey("schematicVersionCycleNext",         "",     "A hotkey to cycle to the next schematic version in the Version Control tool mode");
-    public static final ConfigHotkey SCHEMATIC_VERSION_CYCLE_PREVIOUS   = new ConfigHotkey("schematicVersionCyclePrevious",     "",     "A hotkey to cycle to the next schematic version in the Version Control tool mode");
-    public static final ConfigHotkey SELECTION_GRAB_MODIFIER            = new ConfigHotkey("selectionGrabModifier",             "",     KeybindSettings.MODIFIER_INGAME, "The modifier key to hold to \"grab\" a selection\nbox or corner for cursor moving.");
-    public static final ConfigHotkey SELECTION_GROW_HOTKEY              = new ConfigHotkey("selectionGrow",                     "",     "The action hotkey to auto-grow the selection box around\nany adjacent/diagonally connected blocks");
-    public static final ConfigHotkey SELECTION_GROW_MODIFIER            = new ConfigHotkey("selectionGrowModifier",             "",     KeybindSettings.MODIFIER_INGAME, "The modifier key to hold to grow or shrink\na selection box while scrolling");
-    public static final ConfigHotkey SELECTION_NUDGE_MODIFIER           = new ConfigHotkey("selectionNudgeModifier",            "LEFT_ALT", KeybindSettings.MODIFIER_INGAME, "The modifier key to hold while scrolling\nto nudge the selected area or corner");
-    public static final ConfigHotkey SELECTION_MODE_CYCLE               = new ConfigHotkey("selectionModeCycle",                "LEFT_CONTROL,M", "Change the mode between Corners and Cuboid\nin the Area Selection mode");
-    public static final ConfigHotkey SELECTION_SHRINK_HOTKEY            = new ConfigHotkey("selectionShrink",                   "",     "The action hotkey to shrink the selection box so that there\nisn't any empty space (empty layers) on any side");
-    public static final ConfigHotkey SET_AREA_ORIGIN                    = new ConfigHotkey("setAreaOrigin",                     "",     "Set/move the origin point of the current\narea selection to the player's position");
-    public static final ConfigHotkey SET_SELECTION_BOX_POSITION_1       = new ConfigHotkey("setSelectionBoxPosition1",          "",     "Set the first position of the currently selected\nbox to the player's position");
-    public static final ConfigHotkey SET_SELECTION_BOX_POSITION_2       = new ConfigHotkey("setSelectionBoxPosition2",          "",     "Set the second position of the currently selected\nbox to the player's position");
-    public static final ConfigHotkey TOGGLE_ALL_RENDERING               = new ConfigHotkey("toggleAllRendering",                "M,R",  "Toggle all rendering on/off", "All Rendering");
-    public static final ConfigHotkey TOGGLE_AREA_SELECTION_RENDERING    = new ConfigHotkey("toggleAreaSelectionBoxesRendering", "",     "Toggle Area Selection boxes rendering on/off");
-    public static final ConfigHotkey TOGGLE_SCHEMATIC_RENDERING         = new ConfigHotkey("toggleSchematicRendering",          "M,G",  "Toggle schematic rendering (blocks & overlay) on/off");
-    public static final ConfigHotkey TOGGLE_INFO_OVERLAY_RENDERING      = new ConfigHotkey("toggleInfoOverlayRendering",        "",     "Toggle the info overlay rendering (for hovered block info)");
-    public static final ConfigHotkey TOGGLE_OVERLAY_RENDERING           = new ConfigHotkey("toggleOverlayRendering",            "",     "Toggle the block overlay rendering on/off");
-    public static final ConfigHotkey TOGGLE_OVERLAY_OUTLINE_RENDERING   = new ConfigHotkey("toggleOverlayOutlineRendering",     "",     "Toggle the block overlay outline rendering on/off");
-    public static final ConfigHotkey TOGGLE_OVERLAY_SIDE_RENDERING      = new ConfigHotkey("toggleOverlaySideRendering",        "",     "Toggle the block overlay side rendering on/off");
-    public static final ConfigHotkey TOGGLE_PLACEMENT_BOXES_RENDERING   = new ConfigHotkey("togglePlacementBoxesRendering",     "",     "Toggle Schematic Placement boxes rendering on/off");
-    public static final ConfigHotkey TOGGLE_PLACEMENT_RESTRICTION       = new ConfigHotkey("togglePlacementRestriction",        "",     "A hotkey to toggle the placement restriction mode");
-    public static final ConfigHotkey TOGGLE_SCHEMATIC_BLOCK_RENDERING   = new ConfigHotkey("toggleSchematicBlockRendering",     "",     "Toggle schematic block rendering on/off");
-    public static final ConfigHotkey TOGGLE_SIGN_TEXT_PASTE             = new ConfigHotkey("toggleSignTextPaste",               "",     "Toggle the signTextPaste config value (in Generic category)");
-    public static final ConfigHotkey TOGGLE_TRANSLUCENT_RENDERING       = new ConfigHotkey("toggleTranslucentRendering",        "",     "Toggle translucent vs. opaque ghost block rendering");
-    public static final ConfigHotkey TOGGLE_VERIFIER_OVERLAY_RENDERING  = new ConfigHotkey("toggleVerifierOverlayRendering",    "",     "Toggle the Schematic Verifier overlay rendering");
-    public static final ConfigHotkey TOOL_ENABLED_TOGGLE                = new ConfigHotkey("toolEnabledToggle",                 "M,T",  "The keybind to toggle the \"tool\" item functionality on/off");
-    public static final ConfigHotkey TOOL_PLACE_CORNER_1                = new ConfigHotkey("toolPlaceCorner1",                  "BUTTON_1", KeybindSettings.PRESS_ALLOWEXTRA, "The button to use while holding the \"tool\" item\nto place the primary/first corner");
-    public static final ConfigHotkey TOOL_PLACE_CORNER_2                = new ConfigHotkey("toolPlaceCorner2",                  "BUTTON_2", KeybindSettings.PRESS_ALLOWEXTRA, "The button to use while holding the \"tool\" item\nto place the second corner");
-    public static final ConfigHotkey TOOL_SELECT_ELEMENTS               = new ConfigHotkey("toolSelectElements",                "BUTTON_3", KeybindSettings.PRESS_ALLOWEXTRA, "The button to use to select corners or boxes\nwhile holding the \"tool\" item");
-    public static final ConfigHotkey TOOL_SELECT_MODIFIER_BLOCK_1       = new ConfigHotkey("toolSelectModifierBlock1",          "LEFT_ALT", KeybindSettings.MODIFIER_INGAME, "The modifier key to hold while using the 'toolSelectElements'\nhotkey, to select the primary block type to use in some of the tool modes");
-    public static final ConfigHotkey TOOL_SELECT_MODIFIER_BLOCK_2       = new ConfigHotkey("toolSelectModifierBlock2",          "LEFT_SHIFT", KeybindSettings.MODIFIER_INGAME, "The modifier key to hold while using the 'toolSelectElements'\nhotkey, to select the secondary block type to use in some of the tool modes");
-    public static final ConfigHotkey UNLOAD_CURRENT_SCHEMATIC           = new ConfigHotkey("unloadCurrentSchematic",            "",     "Unloads the schematic of the currently selected placement,and thus also removes all placements created from it\n");
+    public static final ConfigHotkey ADD_SELECTION_BOX                  = new ConfigHotkey("addSelectionBox",                   "M,A",  "Добавьте новое поле выбора (позиция 1) здесь");
+    public static final ConfigHotkey CLONE_SELECTION                    = new ConfigHotkey("cloneSelection",                    "",     "Быстрое клонирование текущего выделения области.\n" +
+            "По сути, это просто создание схемы только в памяти,\n" +
+            "а затем создает размещение этой схемы и выделяет ее,\n" +
+            "а также переключает режим инструмента в режим \"Вставить\".");
+    public static final ConfigHotkey DELETE_SELECTION_BOX               = new ConfigHotkey("deleteSelectionBox",                "",     "Удалить текущее выбранное поле");
+    public static final ConfigHotkey EASY_PLACE_ACTIVATION              = new ConfigHotkey("easyPlaceUseKey",                   "BUTTON_2", KeybindSettings.PRESS_ALLOWEXTRA, "Когда включен режим easyPlaceMode, эта клавиша используется для размещения блоко");
+    public static final ConfigHotkey EASY_PLACE_TOGGLE                  = new ConfigHotkey("easyPlaceToggle",                   "",     "Позволяет быстро включить/выключить Easy Place mode");
+    public static final ConfigHotkey EXECUTE_OPERATION                  = new ConfigHotkey("executeOperation",                  "",     "Выполнение текущей операции выбранного инструмента с\n" +
+            "Текущее выделение или размещение в режимах Fill, Replace,\n" +
+            "Paste Schematic и т.д. и т.п.");
+    public static final ConfigHotkey INVERT_GHOST_BLOCK_RENDER_STATE    = new ConfigHotkey("invertGhostBlockRenderState",       "",     "Инвертирует статус рендеринга схемы/призрачного блока\n" +
+            "пока удерживается эта привязка клавиш");
+    public static final ConfigHotkey INVERT_OVERLAY_RENDER_STATE        = new ConfigHotkey("invertOverlayRenderState",          "",     "Инвертирует статус рендеринга наложения, пока эта привязка удерживается нажатой");
+    public static final ConfigHotkey LAYER_MODE_NEXT                    = new ConfigHotkey("layerModeNext",                     "M,PAGE_UP",    "Переключение режима рендеринга (все, слои) вперед");
+    public static final ConfigHotkey LAYER_MODE_PREVIOUS                = new ConfigHotkey("layerModePrevious",                 "M,PAGE_DOWN",  "Переключите режим рендеринга (все, слои) в обратном направлении");
+    public static final ConfigHotkey LAYER_NEXT                         = new ConfigHotkey("layerNext",                         "PAGE_UP",      "Переместите выделение слоя с рендерингом вверх");
+    public static final ConfigHotkey LAYER_PREVIOUS                     = new ConfigHotkey("layerPrevious",                     "PAGE_DOWN",    "Переместите выделение слоя с рендерингом вниз");
+    public static final ConfigHotkey LAYER_SET_HERE                     = new ConfigHotkey("layerSetHere",                      "",     "Установите слой рендеринга на текущую позицию игрока");
+    public static final ConfigHotkey NUDGE_SELECTION_NEGATIVE           = new ConfigHotkey("nudgeSelectionNegative",            "",     "Сдвинуть текущее выделение в \"отрицательном\" направлении\n" +
+            "Это практически то же самое, что и колесико мыши вниз\n" +
+            "с нажатым модификатором Nudge");
+    public static final ConfigHotkey NUDGE_SELECTION_POSITIVE           = new ConfigHotkey("nudgeSelectionPositive",            "",     "Сдвинуть текущее выделение в \"положительном\" направлении\n" +
+            "Это практически то же самое, что и колесико мыши вверх\n" +
+            "с нажатым модификатором Nudge");
+    public static final ConfigHotkey MOVE_ENTIRE_SELECTION              = new ConfigHotkey("moveEntireSelection",               "",     "Переместите весь текущий выбор сюда");
+    public static final ConfigHotkey OPEN_GUI_AREA_SETTINGS             = new ConfigHotkey("openGuiAreaSettings",               "KP_MULTIPLY", "Откройте графический интерфейс настроек области для текущей выбранной области");
+    public static final ConfigHotkey OPEN_GUI_LOADED_SCHEMATICS         = new ConfigHotkey("openGuiLoadedSchematics",           "",     "Откройте графический интерфейс загруженной схемы");
+    public static final ConfigHotkey OPEN_GUI_MAIN_MENU                 = new ConfigHotkey("openGuiMainMenu",                   "M",    KeybindSettings.RELEASE_EXCLUSIVE, "Откройте главное меню Litematica");
+    public static final ConfigHotkey OPEN_GUI_MATERIAL_LIST             = new ConfigHotkey("openGuiMaterialList",               "M,L",  "Откройте графический интерфейс списка материалов для текущего\n" +
+            "выбранного размещения схемы");
+    public static final ConfigHotkey OPEN_GUI_PLACEMENT_SETTINGS        = new ConfigHotkey("openGuiPlacementSettings",          "KP_SUBTRACT", "Открыть графический интерфейс настроек размещения для текущего\n" +
+            "выбранного размещения или субрегиона");
+    public static final ConfigHotkey OPEN_GUI_SCHEMATIC_PLACEMENTS      = new ConfigHotkey("openGuiSchematicPlacements",        "M,P",  "Откройте графический интерфейс размещения схем");
+    public static final ConfigHotkey OPEN_GUI_SCHEMATIC_PROJECTS        = new ConfigHotkey("openGuiSchematicProjects",          "",     "Откройте графический интерфейс Schematic Projects");
+    public static final ConfigHotkey OPEN_GUI_SCHEMATIC_VERIFIER        = new ConfigHotkey("openGuiSchematicVerifier",          "M,V",  "Откройте графический интерфейс Schematic Verifier для текущего\n" +
+            "выбранного размещения схемы");
+    public static final ConfigHotkey OPEN_GUI_SELECTION_MANAGER         = new ConfigHotkey("openGuiSelectionManager",           "M,S",  "Откройте графический интерфейс менеджера выбора области");
+    public static final ConfigHotkey OPEN_GUI_SETTINGS                  = new ConfigHotkey("openGuiSettings",                   "M,C",  "Откройте графический интерфейс конфигурации");
+    public static final ConfigHotkey OPERATION_MODE_CHANGE_MODIFIER     = new ConfigHotkey("operationModeChangeModifier",       "LEFT_CONTROL", KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор для быстрого изменения режима работы.\n" +
+            "Удерживайте ее и прокручивайте, удерживая \" tool item\", чтобы быстро переключить режим.");
+    public static final ConfigHotkey PICK_BLOCK_FIRST                   = new ConfigHotkey("pickBlockFirst",                    "BUTTON_3",     KeybindSettings.PRESS_ALLOWEXTRA, "Ключ для выбора блока первый\n" +
+            "схематический блок, прослеженный лучами до");
+    public static final ConfigHotkey PICK_BLOCK_LAST                    = new ConfigHotkey("pickBlockLast",                     "",             KeybindSettings.MODIFIER_INGAME, "Ключ для выбора последнего блока схемы\n" +
+            "к которому прослеживается луч, перед первым (возможным) клиентским миром\n" +
+            "до которого прослеживается луч. В основном это позволяет получить\n" +
+            "блок, который можно поместить напротив существующего блока.");
+    public static final ConfigHotkey PICK_BLOCK_TOGGLE                  = new ConfigHotkey("pickBlockToggle",                   "M,BUTTON_3",   "Горячая клавиша для переключения опции переключения блока выбора в\n" +
+            "Generic configs. Это предоставляется как быстрый способ включить\n" +
+            "или отключить клавиши блока выбора, если они мешают.");
+    public static final ConfigHotkey RENDER_INFO_OVERLAY                = new ConfigHotkey("renderInfoOverlay",                 "I",            KeybindSettings.PRESS_ALLOWEXTRA, "The key that enables rendering the block info overlay.\n" +
+            "Use NONE for not requiring a key to be pressed.\n" +
+            "Disable the similarly named option in the Visuals\n" +
+            "configs to disable the overlay completely.");
+    public static final ConfigHotkey RENDER_OVERLAY_THROUGH_BLOCKS      = new ConfigHotkey("renderOverlayThroughBlocks",        "RIGHT_CONTROL", KeybindSettings.PRESS_ALLOWEXTRA, "Горячая клавиша для разрешения рендеринга оверлеев через блоки.\n" +
+            "Это просто более быстрый способ временно включить\n" +
+            "то же самое, что делает опция 'schematicOverlayRenderThroughBlocks' в Visuals.");
+    public static final ConfigHotkey RERENDER_SCHEMATIC                 = new ConfigHotkey("rerenderSchematic",                 "F3,M", "Горячая клавиша для обновления/перерисовки только схемы, вместо того, чтобы\n" +
+            "необходимости обновлять и ванильный рельеф с помощью F3 + A");
+    public static final ConfigHotkey SAVE_AREA_AS_IN_MEMORY_SCHEMATIC   = new ConfigHotkey("saveAreaAsInMemorySchematic",       "",     "Сохранить текущий выбор области как схему в памяти");
+    public static final ConfigHotkey SAVE_AREA_AS_SCHEMATIC_TO_FILE     = new ConfigHotkey("saveAreaAsSchematicToFile",         "LEFT_CONTROL,LEFT_ALT,S",  "Сохранить текущий выбор области как схему в файл");
+    public static final ConfigHotkey SCHEMATIC_EDIT_BREAK_ALL_EXCEPT    = new ConfigHotkey("schematicEditBreakAllExcept",       "", KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор для активации режима/функции \" ломать все, кроме\"\n" +
+            "в режиме инструмента редактирования схемы.\n" +
+            "В принципе, когда вы удерживаете эту клавишу и ударяете по блоку схемы,\n" +
+            "все остальные блоки, кроме этого блока, будут удалены из схемы.");
+    public static final ConfigHotkey SCHEMATIC_EDIT_BREAK_ALL           = new ConfigHotkey("schematicEditBreakPlaceAll",        "", KeybindSettings.MODIFIER_INGAME, "клавиша-модификатор для активации функции \"разбить все одинаковые блоки\"\n" +
+            "в режиме инструмента редактирования схемы");
+    public static final ConfigHotkey SCHEMATIC_EDIT_BREAK_DIRECTION     = new ConfigHotkey("schematicEditBreakPlaceDirection",  "", KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор для активации функции направленного/непрерывного\n" +
+            "разрыв или место в режиме инструмента редактирования схемы");
+    public static final ConfigHotkey SCHEMATIC_EDIT_REPLACE_ALL         = new ConfigHotkey("schematicEditReplaceAll",           "", KeybindSettings.MODIFIER_INGAME, "клавиша-модификатор для активации режима/функции замены \"заменить все идентичные\"\n" +
+            "режим/функция замены в режиме инструмента редактирования схемы");
+    public static final ConfigHotkey SCHEMATIC_EDIT_REPLACE_BLOCK       = new ConfigHotkey("schematicEditReplaceBlock",         "", KeybindSettings.MODIFIER_INGAME, "клавиша-модификатор для активации режима/функции замены \"заменить тип блока\"\n" +
+            "режим/функция замены в режиме инструмента редактирования схемы");
+    public static final ConfigHotkey SCHEMATIC_EDIT_REPLACE_DIRECTION   = new ConfigHotkey("schematicEditReplaceDirection",     "", KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор для активации режима/функции направленной/непрерывной\n" +
+            "режим/функция замены в режиме инструмента редактирования схемы");
+    public static final ConfigHotkey SCHEMATIC_VERSION_CYCLE_MODIFIER   = new ConfigHotkey("schematicVersionCycleModifier",     "",     KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор, которую нужно удерживать, чтобы иметь возможность использовать колесико мыши\n" +
+            "для перебора версий схемы в режиме инструмента \" Version Control\".");
+    public static final ConfigHotkey SCHEMATIC_VERSION_CYCLE_NEXT       = new ConfigHotkey("schematicVersionCycleNext",         "",     "Горячая клавиша для перехода к следующей версии схемы в режиме инструмента контроля версий");
+    public static final ConfigHotkey SCHEMATIC_VERSION_CYCLE_PREVIOUS   = new ConfigHotkey("schematicVersionCyclePrevious",     "",     "Горячая клавиша для перехода к предыдущей версии схемы в режиме инструмента контроля версий");
+    public static final ConfigHotkey SELECTION_GRAB_MODIFIER            = new ConfigHotkey("selectionGrabModifier",             "",     KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор, которую нужно удерживать, чтобы \"захватить\" поле выделения\n" +
+            "или угол для перемещения курсора.");
+    public static final ConfigHotkey SELECTION_GROW_HOTKEY              = new ConfigHotkey("selectionGrow",                     "",     "Горячая клавиша для автоматического увеличения поля выбора вокруг\n" +
+            "любых смежных/диагонально соединенных блоков");
+    public static final ConfigHotkey SELECTION_GROW_MODIFIER            = new ConfigHotkey("selectionGrowModifier",             "",     KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор, которую нужно удерживать для увеличения или уменьшения\n" +
+            "поле выбора при прокрутке");
+    public static final ConfigHotkey SELECTION_NUDGE_MODIFIER           = new ConfigHotkey("selectionNudgeModifier",            "LEFT_ALT", KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор, которую нужно удерживать при прокрутке\n" +
+            "чтобы сдвинуть выбранную область или угол");
+    public static final ConfigHotkey SELECTION_MODE_CYCLE               = new ConfigHotkey("selectionModeCycle",                "LEFT_CONTROL,M", "Измените режим между углами и кубоидом\n" +
+            "в режиме выбора области");
+    public static final ConfigHotkey SELECTION_SHRINK_HOTKEY            = new ConfigHotkey("selectionShrink",                   "",     "Горячая клавиша для уменьшения области выделения так, чтобы в ней\n" +
+            "не осталось пустого пространства (пустых слоев) ни с одной стороны");
+    public static final ConfigHotkey SET_AREA_ORIGIN                    = new ConfigHotkey("setAreaOrigin",                     "",     "Установить/переместить начальную точку текущего\n" +
+            "выделение области на позицию игрока");
+    public static final ConfigHotkey SET_SELECTION_BOX_POSITION_1       = new ConfigHotkey("setSelectionBoxPosition1",          "",     "Установить первую позицию текущего выбранного\n" +
+            "на позицию игрока");
+    public static final ConfigHotkey SET_SELECTION_BOX_POSITION_2       = new ConfigHotkey("setSelectionBoxPosition2",          "",     "Установите вторую позицию текущего выбранного\n" +
+            "на позицию игрока");
+    public static final ConfigHotkey TOGGLE_ALL_RENDERING               = new ConfigHotkey("toggleAllRendering",                "M,R",  "Включить/выключить все виды рендеринга", "All Rendering");
+    public static final ConfigHotkey TOGGLE_AREA_SELECTION_RENDERING    = new ConfigHotkey("toggleAreaSelectionBoxesRendering", "",     "Включение/выключение рендеринга полей выбора области");
+    public static final ConfigHotkey TOGGLE_SCHEMATIC_RENDERING         = new ConfigHotkey("toggleSchematicRendering",          "M,G",  "Включение/выключение визуализации схемы (блоки и наложение)");
+    public static final ConfigHotkey TOGGLE_INFO_OVERLAY_RENDERING      = new ConfigHotkey("toggleInfoOverlayRendering",        "",     "Переключение отображения наложения информации (для информации о наведенном блоке)");
+    public static final ConfigHotkey TOGGLE_OVERLAY_RENDERING           = new ConfigHotkey("toggleOverlayRendering",            "",     "Включение/выключение рендеринга наложения блока");
+    public static final ConfigHotkey TOGGLE_OVERLAY_OUTLINE_RENDERING   = new ConfigHotkey("toggleOverlayOutlineRendering",     "",     "Включение/выключение рендеринга контура наложения блока");
+    public static final ConfigHotkey TOGGLE_OVERLAY_SIDE_RENDERING      = new ConfigHotkey("toggleOverlaySideRendering",        "",     "Включение/выключение бокового рендеринга наложения блока");
+    public static final ConfigHotkey TOGGLE_PLACEMENT_BOXES_RENDERING   = new ConfigHotkey("togglePlacementBoxesRendering",     "",     "Включить/выключить рендеринг блоков размещения схем");
+    public static final ConfigHotkey TOGGLE_PLACEMENT_RESTRICTION       = new ConfigHotkey("togglePlacementRestriction",        "",     "Горячая клавиша для переключения режима ограничения размещения");
+    public static final ConfigHotkey TOGGLE_SCHEMATIC_BLOCK_RENDERING   = new ConfigHotkey("toggleSchematicBlockRendering",     "",     "Включение/выключение рендеринга схемных блоков");
+    public static final ConfigHotkey TOGGLE_SIGN_TEXT_PASTE             = new ConfigHotkey("toggleSignTextPaste",               "",     "Переключение значения конфигурации signTextPaste (в категории Generic)");
+    public static final ConfigHotkey TOGGLE_TRANSLUCENT_RENDERING       = new ConfigHotkey("toggleTranslucentRendering",        "",     "Переключение полупрозрачного и непрозрачного рендеринга призрачных блоков");
+    public static final ConfigHotkey TOGGLE_VERIFIER_OVERLAY_RENDERING  = new ConfigHotkey("toggleVerifierOverlayRendering",    "",     "Переключение рендеринга наложения Schematic Verifier");
+    public static final ConfigHotkey TOOL_ENABLED_TOGGLE                = new ConfigHotkey("toolEnabledToggle",                 "M,T",  "Привязка клавиш для включения/выключения функциональности элемента \"инструмент\"");
+    public static final ConfigHotkey TOOL_PLACE_CORNER_1                = new ConfigHotkey("toolPlaceCorner1",                  "BUTTON_1", KeybindSettings.PRESS_ALLOWEXTRA, "Кнопка, которую нужно использовать, удерживая \"tool\" предмет\n" +
+            "для размещения основного/первого угла");
+    public static final ConfigHotkey TOOL_PLACE_CORNER_2                = new ConfigHotkey("toolPlaceCorner2",                  "BUTTON_2", KeybindSettings.PRESS_ALLOWEXTRA, "Кнопка, которую нужно использовать, удерживая \"tool\" инструмент\n" +
+            "для размещения второго угла");
+    public static final ConfigHotkey TOOL_SELECT_ELEMENTS               = new ConfigHotkey("toolSelectElements",                "BUTTON_3", KeybindSettings.PRESS_ALLOWEXTRA, "Кнопка, которую следует использовать для выделения углов или квадратов\n" +
+            "удерживая предмет\" tool\"");
+    public static final ConfigHotkey TOOL_SELECT_MODIFIER_BLOCK_1       = new ConfigHotkey("toolSelectModifierBlock1",          "LEFT_ALT", KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор, которую нужно удерживать при использовании горячей клавиши 'toolSelectElements'\n" +
+            "для выбора типа основного блока, используемого в некоторых режимах работы инструмента.");
+    public static final ConfigHotkey TOOL_SELECT_MODIFIER_BLOCK_2       = new ConfigHotkey("toolSelectModifierBlock2",          "LEFT_SHIFT", KeybindSettings.MODIFIER_INGAME, "Клавиша-модификатор, которую нужно удерживать при использовании горячей клавиши 'toolSelectElements'\n" +
+            "для выбора типа вторичного блока, используемого в некоторых режимах работы инструмента");
+    public static final ConfigHotkey UNLOAD_CURRENT_SCHEMATIC           = new ConfigHotkey("unloadCurrentSchematic",            "",     "Выгружает схему текущего выбранного размещения и, таким образом, удаляет все созданные на ее основе размещения");
 
     public static final List<ConfigHotkey> HOTKEY_LIST = ImmutableList.of(
             ADD_SELECTION_BOX,

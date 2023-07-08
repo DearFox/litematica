@@ -32,63 +32,209 @@ public class Configs implements IConfigHandler
 
     public static class Generic
     {
-        public static final ConfigBoolean       AREAS_PER_WORLD         = new ConfigBoolean(    "areaSelectionsPerWorld", true, "Use per-world or server root directories for the area selections\n§6NOTE: Don't switch this OFF while you are live streaming,\n§6as then the Area Selection browser will show the server IP\n§6in the navigation widget and also in the current selection name/path\n§6until you change the current directory and selection again");
-        public static final ConfigBoolean       BETTER_RENDER_ORDER     = new ConfigBoolean(    "betterRenderOrder", true, "If enabled, then the schematic rendering is done\nby injecting the different render call into the vanilla\nrendering code. This should result in better translucent block\nrendering/ordering and schematic blocks not getting rendered\nthrough the client world blocks/terrain.\nIf the rendering doesn't work (for example with Optifine),\ntry disabling this option.");
-        public static final ConfigBoolean       CHANGE_SELECTED_CORNER  = new ConfigBoolean(    "changeSelectedCornerOnMove", true, "If true, then the selected corner of an area selection\nis always set to the last moved corner,\nwhen using the set corner hotkeys");
-        public static final ConfigBoolean       CLONE_AT_ORIGINAL_POS   = new ConfigBoolean(    "cloneAtOriginalPosition", false, "If enabled, then using the Clone Selection hotkey will create\nthe placement at the original area selection position,\ninstead of at the player's current position");
-        public static final ConfigBoolean       COMMAND_DISABLE_FEEDBACK = new ConfigBoolean(   "commandDisableFeedback", true, "If enabled, then command feedback is automatically disabled\nand then re-enabled for multiplayer Paste, Fill and Delete operations\n(which are using /setblock and /fill commands) by disabling and then\nre-enabling the sendCommandFeedback game rule when the task is finished");
-        public static final ConfigInteger       COMMAND_FILL_MAX_VOLUME = new ConfigInteger(    "commandFillMaxVolume", 32768, 256, 60000000, "The maximum size/volume of each individual box\nthat can be filled via the command-based Fill/Delete\noperations. Bigger areas/volumes will get split to multiple commands.\nAll areas are also split to per-chunk boxes at first anyway.");
-        public static final ConfigBoolean       COMMAND_FILL_NO_CHUNK_CLAMP = new ConfigBoolean("commandFillNoChunkClamp", false, "Disables dividing the fill volumes (in the Fill, Replace and Delete modes)\nto per-chunk boxes");
-        public static final ConfigInteger       COMMAND_LIMIT           = new ConfigInteger(    "commandLimitPerTick", 64, 1, 1000000, "Maximum number of commands sent per game tick,\nwhen using the Paste, Fill and Delete features on a server,\nwhere they will use setblock and fill commands.\nNote that he Paste feature can overshoot this by a couple of commands\nwhen using the NBT restore functionality, which needs two additional commands for each block.");
-        public static final ConfigString        COMMAND_NAME_CLONE      = new ConfigString(     "commandNameClone", "clone", "The clone command name to use when using the\ncommand-based creative mode functionality on servers.\nThis is currently only used by the Paste function if the NBT restore\nbehavior is set to 'Place & Clone'.");
-        public static final ConfigString        COMMAND_NAME_FILL       = new ConfigString(     "commandNameFill", "fill", "The fill command name to use when using the\ncommand-based creative mode functionality on servers");
-        public static final ConfigString        COMMAND_NAME_SETBLOCK   = new ConfigString(     "commandNameSetblock", "setblock", "The setblock command name to use when using the\ncommand-based creative mode functionality on servers,\nnamely the Paste Schematic in World function");
-        public static final ConfigString        COMMAND_NAME_SUMMON     = new ConfigString(     "commandNameSummon", "summon", "The summon command name to use when using the\ncommand-based creative mode functionality on servers,\nnamely the Paste Schematic in World function");
-        public static final ConfigInteger       COMMAND_TASK_INTERVAL   = new ConfigInteger(    "commandTaskInterval", 1, 1, 1000, "The interval in game ticks the Paste, Fill and Delete tasks\nare executed at. The commandLimitPerTick config sets the maximum\nnumber of commands to send per execution, and this config\nsets the interval in game ticks before the next execution.");
-        public static final ConfigBoolean       COMMAND_USE_WORLDEDIT   = new ConfigBoolean(    "commandUseWorldEdit", false, "If enabled, instead of using the configured setblock and fill commands,\nthe World Edit //pos1, //pos2 and //set commands are used.\nNote that using World Edit commands is around 3x slower\nthan using vanilla commands due to the command limit per tick,\nand WE requiring multiple commands per block or area (//pos1 //pos2 //set).\n§6WARNING: The paste replace behavior option WILL NOT WORK if using\n§6the World Edit commands and fill volumes instead of individual setblock commands!\nThus it's recommended to use the vanilla commands, if you have the permission to run them.\nOne other thing that might make you prefer WE commands in some cases\nis that they can prevent block updates, if the server doesn't have\nthe Carpet mod and thus the '/carpet fillUpdates false' rule available.");
-        public static final ConfigBoolean       CUSTOM_SCHEMATIC_BASE_DIRECTORY_ENABLED = new ConfigBoolean("customSchematicBaseDirectoryEnabled", false, "If enabled, then the directory set in 'customSchematicBaseDirectory'\nwill be used as the root/base schematic directory,\ninstead of the normal '.minecraft/schematics/' directory");
-        public static final ConfigString        CUSTOM_SCHEMATIC_BASE_DIRECTORY         = new ConfigString( "customSchematicBaseDirectory", DataManager.getDefaultBaseSchematicDirectory().getAbsolutePath(), "The root/base schematic directory to use,\nif 'customSchematicBaseDirectoryEnabled' is enabled");
-        public static final ConfigBoolean       DEBUG_LOGGING           = new ConfigBoolean(    "debugLogging", false, "Enables some debug log messages in the game console,\nfor debugging certain issues or crashes.");
-        public static final ConfigBoolean       EASY_PLACE_FIRST        = new ConfigBoolean(    "easyPlaceFirst", true, "This causes the Easy Place mode to place the first/closest block\nyou are looking at first, instead of the furthest/bottom-most block.\nSetting this to false allows you to place multiple layers \"at once\",\nsince the furthest blocks would be placed before the closer ones block the line of sight.");
-        public static final ConfigBoolean       EASY_PLACE_HOLD_ENABLED = new ConfigBoolean(    "easyPlaceHoldEnabled", true, "When enabled, then you can hold down the use key\nand look at different schematic blocks to place them,\nwithout having to click on every block individually.");
-        public static final ConfigBoolean       EASY_PLACE_MODE         = new ConfigBoolean(    "easyPlaceMode", false, "When enabled, then simply trying to use an item/place a block\non schematic blocks will place that block in that position");
-        public static final ConfigBoolean       EASY_PLACE_SP_HANDLING  = new ConfigBoolean(    "easyPlaceSinglePlayerHandling", true, "If enabled, then Litematica handles the so called\n\"Carpet mod Accurate Block Placement Protocol\" itself in single player.\nThis is recommended to be kept enabled if you\nare going to use Easy Place in single player.");
-        public static final ConfigOptionList    EASY_PLACE_PROTOCOL     = new ConfigOptionList( "easyPlaceProtocolVersion", EasyPlaceProtocol.AUTO, "The type of \"accurate placement protocol\" to use.\n- Auto: Uses v3 in single player, and by default Slabs-only in multiplayer,\n  unless the server has Carpet mod that sends a 'carpet:hello'\n  packet, in which case v2 is used on that server.\n- Version 3: Only supported by Litematica itself (in single player) for now.\n- Version 2: Compatible with servers with the Carpet mod\n  (either QuickCarpet by skyrising and DeadlyMC,\n  or CarpetExtra in addition to FabricCarpet.\n  And in both cases the 'accurateBlockPlacement' Carpet rule needs\n  to be enabled on the server).\n- Slabs only: Only fixes top slabs. Compatible with Paper servers.\n- None: Does not modify coordinates.");
-        public static final ConfigInteger       EASY_PLACE_SWAP_INTERVAL = new ConfigInteger(   "easyPlaceSwapInterval", 0, 0, 10000, "The interval in milliseconds the Easy Place mode waits\nafter swapping inventory slots and placing a block.\nUseful to avoid placing wrong blocks when having high ping.");
-        public static final ConfigBoolean       EASY_PLACE_VANILLA_REACH = new ConfigBoolean(   "easyPlaceVanillaReach", false, "If enabled, reduces reach distance from 6 to 4.5\nso servers don't reject placement of far blocks.");
-        public static final ConfigBoolean       EXECUTE_REQUIRE_TOOL    = new ConfigBoolean(    "executeRequireHoldingTool", true, "Require holding an enabled tool item\nfor the executeOperation hotkey to work");
-        public static final ConfigBoolean       FIX_CHEST_MIRROR        = new ConfigBoolean(    "fixChestMirror", true, "Enable a fix to the broken chest mirror code in vanilla");
-        public static final ConfigBoolean       FIX_RAIL_ROTATION       = new ConfigBoolean(    "fixRailRotation", true, "If true, then a fix is applied for the vanilla bug in rails,\nwhere the 180 degree rotations of straight north-south and\neast-west rails rotate 90 degrees counterclockwise instead >_>");
-        public static final ConfigBoolean       GENERATE_LOWERCASE_NAMES = new ConfigBoolean(   "generateLowercaseNames", false, "If enabled, then by default the suggested schematic names\nwill be lowercase and using underscores instead of spaces");
-        public static final ConfigBoolean       HIGHLIGHT_BLOCK_IN_INV  = new ConfigBoolean(    "highlightBlockInInventory", false, "When enabled, highlights the item (including Shulker Boxes containing it)\nof the looked at block in the schematic");
-        public static final ConfigBoolean       ITEM_USE_PACKET_CHECK_BYPASS = new ConfigBoolean("itemUsePacketCheckBypass", true, "Bypass the new distance/coordinate check that was added in 1.18.2.\n\nThat check breaks the \"accurate placement protocol\" and causes\nany blocks placed with a rotation (or other property) request to just become ghost blocks.\n\nThere is basically no need to ever disable this.\nThe check didn't even exist ever before 1.18.2.");
-        public static final ConfigBoolean       LAYER_MODE_DYNAMIC      = new ConfigBoolean(    "layerModeFollowsPlayer", false, "If true, then the render layer follows the player.\nNote: This currently collapses Layer Range type ranges unfortunately");
-        public static final ConfigBoolean       LOAD_ENTIRE_SCHEMATICS  = new ConfigBoolean(    "loadEntireSchematics", false, "If true, then the entire schematic is always loaded at once.\nIf false, then only the part that is within the client's view distance is loaded.");
-        public static final ConfigBoolean       PASTE_ALWAYS_USE_FILL    = new ConfigBoolean(   "pasteAlwaysUseFill", false, "This forces using the fill command (instead of setblock) even for single blocks");
-        public static final ConfigBoolean       PASTE_IGNORE_BE_ENTIRELY = new ConfigBoolean(   "pasteIgnoreBlockEntitiesEntirely", false, "If enabled, then block entities ae not pasted at all\nvia the command-based pasting in multiplayer.\nThis allows you to easier paste in two passes if you\nwant to use the NBT-restore option for inventories etc. in the second pass,\nwhich usually requires a lot slower pasting speed/command rate.");
-        public static final ConfigBoolean       PASTE_IGNORE_BE_IN_FILL = new ConfigBoolean(    "pasteIgnoreBlockEntitiesFromFill", true, "If enabled, then all block entities are ignored from the fill\ncommands when pasting. This allows them to get pasted individually,\nwhich is required if the NBT restore option is being used.");
-        public static final ConfigBoolean       PASTE_IGNORE_CMD_LIMIT  = new ConfigBoolean(    "pasteIgnoreCommandLimitWithNbtRestore", true, "If enabled, then the command limit is ignored when pasting\nblocks with a block entity with the NBT restore option enabled.\nThis seems to somehow fix an issue where the NBT restore\nwould otherwise fail for many blocks with a low command rate.");
-        public static final ConfigBoolean       PASTE_IGNORE_ENTITIES   = new ConfigBoolean(    "pasteIgnoreEntities", false, "If enabled, then the Paste feature will not paste any entities");
-        public static final ConfigBoolean       PASTE_IGNORE_INVENTORY  = new ConfigBoolean(    "pasteIgnoreInventories", false, "Don't paste inventory contents when pasting a schematic");
-        public static final ConfigOptionList    PASTE_NBT_BEHAVIOR      = new ConfigOptionList( "pasteNbtRestoreBehavior", PasteNbtBehavior.NONE, "Whether or not the NBT data of blocks is attempted to be restored,\nand which method is used for that.\n- Place & Data Modify will try to place the \"NBT-picked\" block\n  near the player, and then use the data modify\n  command to transfer the NBT data to the setblock'ed block\n- Place & Clone will try to place the \"NBT-picked\" block\n  near the player, and then clone it to the final location.\n- Teleport & Place will try to teleport the player nearby and then\n  directly place the NBT-picked item in the correct position.\nNote that the teleport & place method doesn't currently work correctly/at all.\nThe recommended method is §ePlace & Data Modify§r, however for that to work\nyou will probably need to lower the pasteCommandLimit to 1 per tick and increase\nthe pasteCommandInterval to 1-4 ticks or something.\nThus you should only use this for pasting important blocks that need the data,\nfor example by making a schematic of just the inventories,\nand then paste that with replace behavior set to None.");
-        public static final ConfigOptionList    PASTE_REPLACE_BEHAVIOR  = new ConfigOptionList( "pasteReplaceBehavior", ReplaceBehavior.NONE, "The behavior of replacing existing blocks\nin the Paste schematic tool mode");
-        public static final ConfigBoolean       PASTE_TO_MCFUNCTION     = new ConfigBoolean(    "pasteToMcFunctionFiles", false, "If enabled, then instead of actually pasting schematics to the world,\nthey are written as setblock commands into text files.");
-        public static final ConfigBoolean       PASTE_USE_FILL_COMMAND  = new ConfigBoolean(    "pasteUseFillCommand", true, "If enabled, then instead of only using individual /setblock commands,\nthe command-based Paste operation (which is used on servers)\nwill also try to use /fill commands for any continuous areas of the same block.\nThis has no effect in single player, since the mod sets the blocks directly\nin the integrated server's world in and doesn't use commands at all.");
-        public static final ConfigBoolean       PICK_BLOCK_AVOID_DAMAGEABLE = new ConfigBoolean("pickBlockAvoidDamageable", true, "Avoids replacing any damageable items in the hotbar");
-        public static final ConfigBoolean       PICK_BLOCK_AVOID_TOOLS  = new ConfigBoolean(    "pickBlockAvoidTools", false, "Avoids replacing any tool items in the hotbar.\n\nThis means any items that extend the vanilla ToolItem class.");
-        public static final ConfigBoolean       PICK_BLOCK_ENABLED      = new ConfigBoolean(    "pickBlockEnabled", true, "Enables the schematic world pick block hotkeys.\nThere is also a hotkey for toggling this option to toggle those hotkeys... o.o", "Pick Block Hotkeys");
-        public static final ConfigBoolean       PICK_BLOCK_SHULKERS     = new ConfigBoolean(    "pickBlockShulkers", false, "If enabled, then if the required item for the pick bloc\nis not found directly in the player's inventory, but there\nis a Shulker box that contains it, the Shulker Box\nwill be switched to the player's hand instead");
-        public static final ConfigString        PICK_BLOCKABLE_SLOTS    = new ConfigString(     "pickBlockableSlots", "1,2,3,4,5", "The hotbar slots that are allowed to be\nused for the schematic pick block");
-        public static final ConfigOptionList    PLACEMENT_REPLACE_BEHAVIOR  = new ConfigOptionList( "placementReplaceBehavior", ReplaceBehavior.ALL, "The block replace behavior when adding blocks\nto the schematic world.\n\nThis allows using overlapped placements without the\nlater handled placement always ovewriting earlier ones with air.\nOn the other hand some blocks like light blocks are considered\nto be air, so they would need the \"All\" replace behavior\nto get placed at all.");
-        public static final ConfigBoolean       PLACEMENT_RESTRICTION   = new ConfigBoolean(    "placementRestriction", false, "When enabled, the use key can only be used\nwhen holding the correct item for the targeted position,\nand the targeted position must have a missing block in the schematic", "Placement Restriction");
-        public static final ConfigOptionList    PLACEMENT_RESTRICTION_WARN = new ConfigOptionList  ("placementRestrictionWarn", MessageOutputType.ACTIONBAR, "Selects which type of warning message to show (if any)\nwhen either the Easy Place mode or Placement Restriction prevent placing a block");
-        public static final ConfigBoolean       RENDER_MATERIALS_IN_GUI = new ConfigBoolean(    "renderMaterialListInGuis", true, "Whether or not the material list should\nbe rendered inside GUIs");
-        public static final ConfigBoolean       RENDER_THREAD_NO_TIMEOUT = new ConfigBoolean(   "renderThreadNoTimeout", true, "Removes the timeout from the rendering worker threads.\nIf you get very stuttery rendering when moving around\nor dealing with large schematics, try disabling this. It will however make\nthe schematic rendering a lot slower in some cases.");
-        public static final ConfigOptionList    SELECTION_CORNERS_MODE  = new ConfigOptionList( "selectionCornersMode", CornerSelectionMode.CORNERS, "The Area Selection corners mode to use (Corners, or Expand)");
-        public static final ConfigBoolean       SIGN_TEXT_PASTE         = new ConfigBoolean(    "signTextPaste", true, "Automatically set the text in the sign GUIs from the schematic");
-        public static final ConfigString        TOOL_ITEM               = new ConfigString(     "toolItem", "minecraft:stick", "The item to use as the \"tool\" for selections etc.");
-        public static final ConfigBoolean       TOOL_ITEM_ENABLED       = new ConfigBoolean(    "toolItemEnabled", true, "If true, then the \"tool\" item can be used to control selections etc.", "Tool Item Enabled");
-        public static final ConfigBoolean       UNHIDE_SCHEMATIC_PROJECTS = new ConfigBoolean(  "unhideSchematicVCS", false, "Un-hides the Schematic VCS (Version Control System) menu button,\nand enables the hotkey and the VCS functionality in general.\n(This was called Schematic Projects before.)\n\nIn general you §6should not§r be using this feature,\nunless you really know how it works and what it does.\nIt somewhat changes how the area selections, placements and pasting works,\nin particular that there is also an area delete operation when pasting.\n\nBasically this feature is intended for §6iterative, in-place§r design work,\nand it allows you to easier create multiple versions/snapshots\nof the same build, and also to switch between the versions by deleting what is\nin the world first, and then pasting the next version in its place.");
+        public static final ConfigOptionList    EASY_PLACE_PROTOCOL         = new ConfigOptionList("easyPlaceProtocolVersion", EasyPlaceProtocol.AUTO, "Тип используемого \"протокола точного размещения\".\n- Auto: Использует v3 в одиночной игре, и по умолчанию Slabs-only в многопользовательской,\n  если только на сервере не установлен мод Carpet, посылающий \"carpet:hello\n  пакет, в этом случае на сервере используется v2.\n- Версия 3: Пока поддерживается только самой Litematica (в одиночной игре).\n- Версия 2: Совместима с серверами с модом Carpet\n  (либо QuickCarpet от skyrising и DeadlyMC,\n  либо CarpetExtra в дополнение к FabricCarpet.\n  И в обоих случаях правило ковра 'accurateBlockPlacement' необходимо\n  должно быть включено на сервере).\n- Только плиты: Исправляет только верхние перекрытия. Совместимо с серверами Paper.\n- None: Не изменяет координаты.");
+        public static final ConfigOptionList    PASTE_NBT_BEHAVIOR          = new ConfigOptionList("pasteNbtRestoreBehavior", PasteNbtBehavior.NONE, "Пытаются ли восстановить данные NBT блоков или нет,\n" +
+                "и какой метод для этого используется.\n" +
+                "- Place & Data Modify попытается поместить \"NBT-выбранный\" блок\n" +
+                "  рядом с игроком, а затем использовать команду data modify\n" +
+                "  чтобы перенести данные NBT в блок, выбранный для setblock'ed.\n" +
+                "- Place & Clone попытается разместить блок \"NBT-picked\"\n" +
+                "  рядом с игроком, а затем клонировать его в конечное место.\n" +
+                "- Teleport & Place попытается телепортировать игрока поблизости, а затем\n" +
+                "  непосредственно поместить выбранный NBT элемент в нужное место.\n" +
+                "Обратите внимание, что метод Teleport & Place в настоящее время работает некорректно/не работает вообще.\n" +
+                "Рекомендуемый метод - §ePlace & Data Modify§r, однако для того, чтобы он работал\n" +
+                "вам, вероятно, потребуется уменьшить значение параметра pasteCommandLimit до 1 за тик и увеличить\n" +
+                "интервал pasteCommandInterval до 1-4 тиков или что-то в этом роде.\n" +
+                "Таким образом, вы должны использовать это только для вставки важных блоков, которым нужны данные,\n" +
+                "например, создав схему только инвентаря,\n" +
+                "и затем вставьте ее с поведением замены, установленным на None.");
+        public static final ConfigOptionList    PASTE_REPLACE_BEHAVIOR      = new ConfigOptionList("pasteReplaceBehavior", ReplaceBehavior.NONE, "Поведение при замене существующих блоков\nв режиме инструмента Вставить схему");
+        public static final ConfigOptionList    PLACEMENT_REPLACE_BEHAVIOR  = new ConfigOptionList("placementReplaceBehavior", ReplaceBehavior.ALL, "Поведение замены блоков при добавлении блоков\n" +
+                "в мир схемы.\n" +
+                "\n" +
+                "Это позволяет использовать перекрывающиеся размещения без того, чтобы\n" +
+                "более позднее размещение всегда заменяет более раннее размещение воздухом.\n" +
+                "С другой стороны, некоторые блоки, такие как блоки света, считаются\n" +
+                "воздухом, поэтому для их размещения необходимо использовать поведение замены \"All\".\n" +
+                "чтобы они вообще были размещены.");
+        public static final ConfigOptionList    PLACEMENT_RESTRICTION_WARN  = new ConfigOptionList("placementRestrictionWarn", MessageOutputType.ACTIONBAR, "Выбор типа предупреждающего сообщения, которое будет показано (если таковое имеется)\n" +
+                "когда режим Easy Place или Placement Restriction препятствуют размещению блока");
+        public static final ConfigOptionList    SELECTION_CORNERS_MODE      = new ConfigOptionList("selectionCornersMode", CornerSelectionMode.CORNERS, "Режим углов выделения области для использования (Углы или Развернуть)");
+
+        public static final ConfigBoolean       CUSTOM_SCHEMATIC_BASE_DIRECTORY_ENABLED = new ConfigBoolean("customSchematicBaseDirectoryEnabled", false, "Если включено, то каталог, заданный в 'customSchematicBaseDirectory'\n" +
+                "будет использоваться в качестве корневого/базового каталога схем,\n" +
+                "вместо обычного каталога '.minecraft/schematics/'.");
+        public static final ConfigString        CUSTOM_SCHEMATIC_BASE_DIRECTORY         = new ConfigString( "customSchematicBaseDirectory", DataManager.getDefaultBaseSchematicDirectory().getAbsolutePath(), "Корневой/базовый каталог схем для использования,\n" +
+                "если включено 'customSchematicBaseDirectoryEnabled'");
+
+        public static final ConfigBoolean       AREAS_PER_WORLD             = new ConfigBoolean("areaSelectionsPerWorld", true, "Используйте корневые каталоги для каждого мира или сервера для выбора области.\n" +
+                "§6NOTE: Не выключайте эту опцию во время прямой трансляции,\n" +
+                "§6так как тогда браузер выбора области будет показывать IP сервера\n" +
+                "§6в виджете навигации, а также в имени/пути текущего выбора\n" +
+                "§6пока вы не измените текущий каталог и выборку снова");
+        public static final ConfigBoolean       BETTER_RENDER_ORDER         = new ConfigBoolean("betterRenderOrder", true, "Если включено, то рендеринг схемы выполняется\n" +
+                "путем внедрения различных вызовов рендеринга в ванильный\n" +
+                "код рендеринга. Это должно привести к лучшему полупрозрачному блоку\n" +
+                "рендеринг/упорядочивание и схематические блоки не будут рендериться\n" +
+                "через блоки/террейн клиентского мира.\n" +
+                "Если рендеринг не работает (например, с Optifine),\n" +
+                "попробуйте отключить эту опцию.");
+        public static final ConfigBoolean       CHANGE_SELECTED_CORNER      = new ConfigBoolean("changeSelectedCornerOnMove", true, "Если true, то выделенный угол при выделении области\n" +
+                "всегда устанавливается на последний перемещенный угол,\n" +
+                "при использовании горячих клавиш set corner");
+        public static final ConfigBoolean       CLONE_AT_ORIGINAL_POS       = new ConfigBoolean("cloneAtOriginalPosition", false, "Если эта функция включена, то при использовании горячей клавиши \" Clone Selection\" будет создано\n" +
+                "размещение в исходной позиции выбора области,\n" +
+                "а не в текущей позиции игрока");
+        public static final ConfigBoolean       COMMAND_DISABLE_FEEDBACK    = new ConfigBoolean("commandDisableFeedback", true, "Если включено, то обратная связь по команде автоматически отключается\n" +
+                "а затем снова включается для многопользовательских операций Paste, Fill и Delete\n" +
+                "(которые используют команды /setblock и /fill) путем отключения, а затем\n" +
+                "повторного включения игрового правила sendCommandFeedback, когда задание завершено");
+        public static final ConfigInteger       COMMAND_FILL_MAX_VOLUME     = new ConfigInteger("commandFillMaxVolume", 32768, 256, 10000000, "Максимальный размер/объем каждой отдельной ячейки\n" +
+                "который может быть заполнен с помощью командных операций Заполнить/Удалить\n" +
+                "операции. Большие области/объемы будут разбиты на несколько команд.\n" +
+                "Сначала все области также разбиваются на отдельные ячейки.");
+        public static final ConfigBoolean       COMMAND_FILL_NO_CHUNK_CLAMP = new ConfigBoolean("commandFillNoChunkClamp", false, "Отключает деление объемов заполнения (в режимах Fill, Replace и Delete)\n" +
+                "на ячейки для каждого куска");
+        public static final ConfigInteger       COMMAND_LIMIT               = new ConfigInteger("commandLimitPerTick", 24, 1, 256, "Максимальное количество команд, отправляемых за один игровой такт,\n" +
+                "при использовании функций Paste, Fill и Delete на сервере,\n" +
+                "где будут использоваться команды setblock и fill.\n" +
+                "Обратите внимание, что функция Paste может превысить этот показатель на несколько команд\n" +
+                "при использовании функции восстановления NBT, которая требует две дополнительные команды для каждого блока.");
+        public static final ConfigString        COMMAND_NAME_CLONE          = new ConfigString( "commandNameClone", "clone", "Имя команды клонирования, используемое при использовании\n" +
+                "функциональность творческого режима на серверах на основе команд.\n" +
+                "В настоящее время это имя используется только функцией Paste, если для параметра восстановления NBT\n" +
+                "установлено значение 'Place & Clone'.");
+        public static final ConfigString        COMMAND_NAME_FILL           = new ConfigString( "commandNameFill", "fill", "Имя команды заполнения, используемое при использовании\n" +
+                "функциональность творческого режима на серверах на основе команд");
+        public static final ConfigString        COMMAND_NAME_SETBLOCK       = new ConfigString( "commandNameSetblock", "setblock", "Имя команды setblock для использования при использовании\n" +
+                "функциональность творческого режима на серверах,\n" +
+                "а именно функции \" Paste Schematic in World\".");
+        public static final ConfigString        COMMAND_NAME_SUMMON         = new ConfigString( "commandNameSummon", "summon", "Имя команды спавна, используемое при использовании\n" +
+                "функциональность творческого режима на серверах,\n" +
+                "а именно функция \" Paste Schematic in World\".");
+        public static final ConfigInteger       COMMAND_TASK_INTERVAL       = new ConfigInteger("commandTaskInterval", 1, 1, 1000, "Интервал в игровых тиках, с которым задания Paste, Fill и Delete\n" +
+                "выполняются с интервалом. Конфигурация commandLimitPerTick устанавливает максимальное\n" +
+                "количество команд, отправляемых за одно выполнение, а эта конфигурация\n" +
+                "задает интервал в игровых тиках перед следующим выполнением.");
+        public static final ConfigBoolean       COMMAND_USE_WORLDEDIT       = new ConfigBoolean("commandUseWorldEdit", false, "Если включено, то вместо использования настроенных команд setblock и fill,\n" +
+                "используются команды World Edit //pos1, //pos2 и //set.\n" +
+                "Обратите внимание, что использование команд World Edit примерно в 3 раза медленнее.\n" +
+                "чем использование ванильных команд из-за ограничения команд на тик,\n" +
+                "и WE, требующих несколько команд на блок или область (//pos1 //pos2 //set).\n" +
+                "§6ПРЕДУПРЕЖДЕНИЕ: Опция поведения \" paste replace\" НЕ РАБОТАЕТ, если использовать\n" +
+                "§6команды редактирования мира и заполнения объемов вместо отдельных команд setblock!\n" +
+                "Поэтому рекомендуется использовать ванильные команды, если у вас есть разрешение на их выполнение.\n" +
+                "Еще одна вещь, которая может заставить вас предпочесть команды WE в некоторых случаях\n" +
+                "это то, что они могут предотвратить обновление блоков, если на сервере не установлен\n" +
+                "мод Carpet и, следовательно, правило '/carpet fillUpdates false' доступно.");
+        public static final ConfigBoolean       DEBUG_LOGGING               = new ConfigBoolean("debugLogging", false, "Включает некоторые сообщения журнала отладки в игровой консоли,\n" +
+                "для отладки некоторых проблем или сбоев.");
+        public static final ConfigBoolean       EASY_PLACE_FIRST            = new ConfigBoolean("easyPlaceFirst", true, "Это заставит режим \"Легкое размещение\" разместить первый/ближайший блок\n" +
+                "на который вы смотрите, вместо самого дальнего/самого нижнего блока.\n" +
+                "Установка этого значения в false позволяет размещать несколько слоев \"одновременно\",\n" +
+                "так как самые дальние блоки будут размещены до того, как более близкие блоки перекроют линию видимости.");
+        public static final ConfigBoolean       EASY_PLACE_HOLD_ENABLED     = new ConfigBoolean("easyPlaceHoldEnabled", true, "Если эта функция включена, то вы можете удерживать нажатой клавишу use\n" +
+                "и смотреть на различные блоки схемы, чтобы разместить их,\n" +
+                "без необходимости щелкать по каждому блоку отдельно.");
+        public static final ConfigBoolean       EASY_PLACE_MODE             = new ConfigBoolean("easyPlaceMode", false, "Если эта функция включена, то простая попытка использовать элемент/разместить блок\n" +
+                "на схематических блоках поместит этот блок в данную позицию");
+        public static final ConfigBoolean       EASY_PLACE_SP_HANDLING      = new ConfigBoolean("easyPlaceSinglePlayerHandling", true, "Если эта функция включена, то Litematica сама обрабатывает так называемый\n" +
+                "\"Carpet mod Accurate Block Placement Protocol\" в одиночной игре.\n" +
+                "Рекомендуется оставить эту опцию включенной, если вы\n" +
+                "собираетесь использовать Easy Place в одиночной игре.");
+        public static final ConfigInteger       EASY_PLACE_SWAP_INTERVAL    = new ConfigInteger("easyPlaceSwapInterval", 0, 0, 10000, "Интервал в миллисекундах, который режим Easy Place ожидает\n" +
+                "после переключения слотов инвентаря и размещения блока.\n" +
+                "Полезно для того, чтобы избежать неправильного размещения блоков при высоком пинге.");
+        public static final ConfigBoolean       EASY_PLACE_VANILLA_REACH    = new ConfigBoolean("easyPlaceVanillaReach", false, "Если включено, уменьшает расстояние досягаемости с 6 до 4,5\n" +
+                "чтобы серверы не отклоняли размещение дальних блоков.");
+        public static final ConfigBoolean       EXECUTE_REQUIRE_TOOL        = new ConfigBoolean("executeRequireHoldingTool", true, "Требуется удерживать включенный элемент инструмента\n" +
+                "для работы горячей клавиши executeOperation");
+        public static final ConfigBoolean       FIX_CHEST_MIRROR            = new ConfigBoolean("fixChestMirror", true, "Включить исправление неработающего кода зеркала сундука в ваниле");
+        public static final ConfigBoolean       FIX_RAIL_ROTATION           = new ConfigBoolean("fixRailRotation", true, "Если true, то будет применено исправление ошибки ванильных рельсов,\n" +
+                "когда 180-градусные повороты прямых рельсов север-юг и\n" +
+                "восточно-западных рельсов вращаются на 90 градусов против часовой стрелки >_>");
+        public static final ConfigBoolean       GENERATE_LOWERCASE_NAMES    = new ConfigBoolean("generateLowercaseNames", false, "Если эта опция включена, то по умолчанию предлагаемые имена схем\n" +
+                "будут строчными и с использованием подчеркивания вместо пробелов.");
+        public static final ConfigBoolean       HIGHLIGHT_BLOCK_IN_INV      = new ConfigBoolean("highlightBlockInInventory", false, "Если включена, выделяет элемент (включая содержащие его блоки Шулькера)\n" +
+                "рассматриваемого блока в схеме");
+        public static final ConfigBoolean       ITEM_USE_PACKET_CHECK_BYPASS= new ConfigBoolean("itemUsePacketCheckBypass", true, "Обход новой проверки расстояния/координат, которая была добавлена в 1.18.2.\n" +
+                "\n" +
+                "Эта проверка нарушает \"протокол точного размещения\" и приводит к тому, что\n" +
+                "любые блоки, размещенные с запросом на поворот (или другое свойство), становятся блоками-призраками.\n" +
+                "\n" +
+                "В принципе, нет никакой необходимости отключать эту проверку.\n" +
+                "Эта проверка даже не существовала до версии 1.18.2.");
+        public static final ConfigBoolean       LAYER_MODE_DYNAMIC          = new ConfigBoolean("layerModeFollowsPlayer", false, "Если true, то слой рендеринга следует за игроком.\n" +
+                "Примечание: В настоящее время этот параметр сворачивает диапазоны типа Layer Range, к сожалению.");
+        public static final ConfigBoolean       LOAD_ENTIRE_SCHEMATICS      = new ConfigBoolean("loadEntireSchematics", false, "Если true, то всегда загружается вся схема сразу.\n" +
+                "Если false, то загружается только та часть, которая находится в пределах расстояния просмотра клиента.");
+        public static final ConfigBoolean       PASTE_ALWAYS_USE_FILL       = new ConfigBoolean("pasteAlwaysUseFill", false, "Это заставляет использовать команду fill (вместо setblock) даже для одиночных блоков");
+        public static final ConfigBoolean       PASTE_IGNORE_BE_ENTIRELY    = new ConfigBoolean("pasteIgnoreBlockEntitiesEntirely", false, "Если включено, то блочные сущности не будут вставляться вообще\n" +
+                "через командную вставку в многопользовательском режиме.\n" +
+                "Это позволяет упростить вставку в два прохода, если вы\n" +
+                "хотите использовать опцию NBT-restore для инвентаря и т.д. во втором проходе,\n" +
+                "что обычно требует гораздо меньшей скорости вставки/команды.");
+        public static final ConfigBoolean       PASTE_IGNORE_BE_IN_FILL     = new ConfigBoolean("pasteIgnoreBlockEntitiesFromFill", true, "Если включено, то все блочные сущности игнорируются из команд заливки\n" +
+                "при вставке. Это позволяет вставлять их по отдельности,\n" +
+                "что необходимо, если используется опция восстановления NBT.");
+        public static final ConfigBoolean       PASTE_IGNORE_CMD_LIMIT      = new ConfigBoolean("pasteIgnoreCommandLimitWithNbtRestore", true, "Если включено, то ограничение команды игнорируется при вставке\n" +
+                "блоков с блочной сущностью с включенной опцией восстановления NBT.\n" +
+                "Похоже, это каким-то образом устраняет проблему, при которой восстановление NBT\n" +
+                "в противном случае не срабатывало для многих блоков с низким количеством команд.");
+        public static final ConfigBoolean       PASTE_IGNORE_ENTITIES       = new ConfigBoolean("pasteIgnoreEntities", false, "Если включено, то функция \"Paste\" не будет вставлять сущности.");
+        public static final ConfigBoolean       PASTE_IGNORE_INVENTORY      = new ConfigBoolean("pasteIgnoreInventories", false, "Не вставляйте содержимое инвентаря при вставке схемы");
+        public static final ConfigBoolean       PASTE_TO_MCFUNCTION         = new ConfigBoolean("pasteToMcFunctionFiles", false, "Если включено, то вместо того, чтобы в действительности вставлять схемы в мир,\n" +
+                "они записываются как команды setblock в текстовые файлы.");
+        public static final ConfigBoolean       PASTE_USE_FILL_COMMAND      = new ConfigBoolean("pasteUseFillCommand", true, "Если включено, то вместо использования только отдельных команд /setblock,\n" +
+                "операция Paste на основе команд (которая используется на серверах)\n" +
+                "будет также пытаться использовать команды /fill для любых непрерывных областей одного и того же блока.\n" +
+                "Это не имеет эффекта в одиночной игре, так как мод устанавливает блоки непосредственно\n" +
+                "в интегрированном мире сервера и не использует команды вообще.");
+        public static final ConfigBoolean       PASTE_USING_COMMANDS_IN_SP  = new ConfigBoolean("pasteUsingCommandsInSp", false, "Это временное обходное решение для использования командной вставки\n" +
+                "также в одиночной игре, что позволяет использовать ограниченный слой рендеринга\n" +
+                "пастинга в одиночной игре, который в настоящее время не работает с\n" +
+                "прямым доступом к миру, который обычно используется в одиночной игре.\n" +
+                "\n" +
+                "Обратите внимание, что при этом будут действовать все те же ограничения на восстановление данных NBT.\n" +
+                "ограничения, которые обычно имеет многопользовательская склейка.");
+        public static final ConfigBoolean       PICK_BLOCK_AVOID_DAMAGEABLE = new ConfigBoolean("pickBlockAvoidDamageable", true, "Позволяет избежать замены повреждаемых элементов в горячей панели");
+        public static final ConfigBoolean       PICK_BLOCK_AVOID_TOOLS      = new ConfigBoolean("pickBlockAvoidTools", false, "Избегает замены любых элементов инструментов на горячей панели.\n" +
+                "\n" +
+                "Это означает любые элементы, которые расширяют ванильный класс ToolItem.");
+        public static final ConfigBoolean       PICK_BLOCK_ENABLED          = new ConfigBoolean("pickBlockEnabled", true, "Включает горячие клавиши выбора блоков мира схем.\n" +
+                "Существует также горячая клавиша для переключения этой опции для переключения этих горячих клавиш... o.o", "Pick Block Hotkeys");
+        public static final ConfigBoolean       PICK_BLOCK_SHULKERS         = new ConfigBoolean("pickBlockShulkers", false, "Если включено, то если необходимый предмет для блока кирки\n" +
+                "не находится непосредственно в инвентаре игрока, но есть\n" +
+                "Шалкер бокс, в котором он находится, то Шалкер бокс\n" +
+                "будет переключен на руку игрока.");
+        public static final ConfigString        PICK_BLOCKABLE_SLOTS        = new ConfigString( "pickBlockableSlots", "1,2,3,4,5", "Слоты горячей панели, которые разрешено\n" +
+                "использовать для блока выбора схемы");
+        public static final ConfigBoolean       PLACEMENT_RESTRICTION       = new ConfigBoolean("placementRestriction", false, "Когда эта функция включена, клавиша использования может быть использована только\n" +
+                "при удержании правильного элемента для целевой позиции,\n" +
+                "и в целевой позиции должен быть отсутствующий блок в схеме", "Placement Restriction");
+        public static final ConfigBoolean       RENDER_MATERIALS_IN_GUI     = new ConfigBoolean("renderMaterialListInGuis", true, "Должен ли список материалов\n" +
+                "отображаться в графическом интерфейсе");
+        public static final ConfigBoolean       RENDER_THREAD_NO_TIMEOUT    = new ConfigBoolean("renderThreadNoTimeout", true, "Снимает таймаут с рабочих потоков рендеринга.\n" +
+                "Если вы получаете очень заикающийся рендеринг при передвижении\n" +
+                "или при работе с большими схемами, попробуйте отключить это. Однако это сделает\n" +
+                "в некоторых случаях рендеринг схем станет намного медленнее.");
+        public static final ConfigBoolean       SIGN_TEXT_PASTE             = new ConfigBoolean("signTextPaste", true, "Автоматическая установка текста в графических интерфейсах знаков на основе схемы");
+        public static final ConfigString        TOOL_ITEM                   = new ConfigString( "toolItem", "minecraft:stick", "Предмет для использования в качестве \"инструмента\" для выделения и т.д.");
+        public static final ConfigBoolean       TOOL_ITEM_ENABLED           = new ConfigBoolean("toolItemEnabled", true, "Если это так, то элемент \"инструмент\" можно использовать для управления выделениями и т.д.", "Tool Item Enabled");
+        public static final ConfigBoolean       UNHIDE_SCHEMATIC_PROJECTS   = new ConfigBoolean("unhideSchematicVCS", false, "Снимает скрытие кнопки меню Schematic VCS (Version Control System),\n" +
+                "и включает горячую клавишу и функциональность VCS в целом.\n" +
+                "(Ранее эта функция называлась Schematic Projects).\n" +
+                "\n" +
+                "В целом, вам не следует использовать эту функцию,\n" +
+                "если только вы действительно не знаете, как она работает и что делает.\n" +
+                "Она несколько меняет принципы выбора, размещения и вставки областей,\n" +
+                "в частности, операция удаления области при вставке.\n" +
+                "\n" +
+                "В основном, эта функция предназначена для §6итеративного проектирования на месте,\n" +
+                "и позволяет легче создавать несколько версий/снимков\n" +
+                "одной и той же сборки, а также переключаться между версиями, удаляя то, что есть\n" +
+                "в мире сначала, а затем вставляя на его место следующую версию.");
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 AREAS_PER_WORLD,
@@ -123,6 +269,7 @@ public class Configs implements IConfigHandler
                 PASTE_NBT_BEHAVIOR,
                 PASTE_TO_MCFUNCTION,
                 PASTE_USE_FILL_COMMAND,
+                PASTE_USING_COMMANDS_IN_SP,
                 PICK_BLOCK_AVOID_DAMAGEABLE,
                 PICK_BLOCK_AVOID_TOOLS,
                 PICK_BLOCK_ENABLED,
@@ -155,37 +302,71 @@ public class Configs implements IConfigHandler
 
     public static class Visuals
     {
-        public static final ConfigBoolean       ENABLE_AREA_SELECTION_RENDERING     = new ConfigBoolean("enableAreaSelectionBoxesRendering", true, "Enable Area Selection boxes rendering", "Area Selection Boxes Rendering");
-        public static final ConfigBoolean       ENABLE_PLACEMENT_BOXES_RENDERING    = new ConfigBoolean("enablePlacementBoxesRendering", true, "Enable Schematic Placement boxes rendering", "Schematic Placement Boxes Rendering");
-        public static final ConfigBoolean       ENABLE_RENDERING                    = new ConfigBoolean("enableRendering", true, "Main rendering toggle option. Enables/disables ALL mod rendering.", "All Rendering");
-        public static final ConfigBoolean       ENABLE_SCHEMATIC_BLOCKS             = new ConfigBoolean("enableSchematicBlocksRendering",  true, "Enables schematic block rendering.\nDisabling this allows you to only see the color overlay", "Schematic Blocks Rendering");
-        public static final ConfigBoolean       ENABLE_SCHEMATIC_OVERLAY            = new ConfigBoolean("enableSchematicOverlay",  true, "The main toggle option for the schematic\nblock overlay rendering", "Schematic Overlay Rendering");
-        public static final ConfigBoolean       ENABLE_SCHEMATIC_RENDERING          = new ConfigBoolean("enableSchematicRendering", true, "Enable rendering the schematic and overlay", "Schematic Rendering");
-        public static final ConfigDouble        GHOST_BLOCK_ALPHA                   = new ConfigDouble( "ghostBlockAlpha", 0.5, 0, 1, "The alpha value of the ghost blocks,\nwhen rendering them as translucent.\n§6Note: §7You also need to enable the translucent rendering separately,\nusing the 'renderBlocksAsTranslucent' option!");
-        public static final ConfigBoolean       IGNORE_EXISTING_FLUIDS              = new ConfigBoolean("ignoreExistingFluids", false, "If enabled, then any fluid blocks are ignored as \"extra blocks\"\nand as \"wrong blocks\", ie. where the schematic has air or other blocks.\nBasically this makes building stuff under water a whole lot less annoying.\nNote: You will most likely also want to enable the 'renderCollidingSchematicBlocks'\noption at the same time, to allow the blocks to get rendered inside fluids.");
-        public static final ConfigBoolean       OVERLAY_REDUCED_INNER_SIDES         = new ConfigBoolean("overlayReducedInnerSides", false, "If enabled, then the adjacent/touching inner sides\nfor the block overlays are removed/not rendered");
-        public static final ConfigDouble        PLACEMENT_BOX_SIDE_ALPHA            = new ConfigDouble( "placementBoxSideAlpha", 0.2, 0, 1, "The alpha value of the sub-region boxes' side");
-        public static final ConfigBoolean       RENDER_AREA_SELECTION_BOX_SIDES     = new ConfigBoolean("renderAreaSelectionBoxSides", true, "If enabled, then the area selection boxes will\nhave their side quads rendered");
-        public static final ConfigBoolean       RENDER_BLOCKS_AS_TRANSLUCENT        = new ConfigBoolean("renderBlocksAsTranslucent", false, "If enabled, then the schematics are rendered\nusing translucent \"ghost blocks\"", "Translucent Schematic Block Rendering");
-        public static final ConfigBoolean       RENDER_COLLIDING_SCHEMATIC_BLOCKS   = new ConfigBoolean("renderCollidingSchematicBlocks", false, "If enabled, then blocks in the schematics are rendered\nalso when there is already a (wrong) block in the client world.\nProbably mostly useful when trying to build\nsomething where there are snow layers or water in the way.");
-        public static final ConfigBoolean       RENDER_ERROR_MARKER_CONNECTIONS     = new ConfigBoolean("renderErrorMarkerConnections", false, "Render connecting lines between subsequent verifier hilight box corners.\nThis was a rendering bug that some people experienced, but at least some players\nliked it and requested for it to stay, so this options \"restores\" it");
-        public static final ConfigBoolean       RENDER_ERROR_MARKER_SIDES           = new ConfigBoolean("renderErrorMarkerSides", true, "If enabled, then the error markers in the Schematic Verifier\nwill have (translucent) sides rendered instead of just the outline");
-        public static final ConfigBoolean       RENDER_PLACEMENT_BOX_SIDES          = new ConfigBoolean("renderPlacementBoxSides", false, "If enabled, then the placed schematic sub-region boxes\nwill have their side quads rendered");
-        public static final ConfigBoolean       RENDER_PLACEMENT_ENCLOSING_BOX      = new ConfigBoolean("renderPlacementEnclosingBox", true, "If enabled, then an enclosing box is rendered around\nall the sub-regions in a schematic (placement)");
-        public static final ConfigBoolean       RENDER_PLACEMENT_ENCLOSING_BOX_SIDES= new ConfigBoolean("renderPlacementEnclosingBoxSides", false, "If enabled, then the enclosing box around\na schematic placement will have its side quads rendered");
-        public static final ConfigBoolean       RENDER_TRANSLUCENT_INNER_SIDES      = new ConfigBoolean("renderTranslucentBlockInnerSides", false, "If enabled, then the model sides are also rendered\nfor inner sides in the translucent mode");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_ENABLE_OUTLINES   = new ConfigBoolean("schematicOverlayEnableOutlines",  true, "Enables rendering a wire frame outline for\nthe schematic block overlay", "Schematic Overlay Outlines");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_ENABLE_SIDES      = new ConfigBoolean("schematicOverlayEnableSides",     true, "Enables rendering translucent boxes/sides for\nthe schematic block overlay", "Schematic Overlay Sides");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_MODEL_OUTLINE     = new ConfigBoolean("schematicOverlayModelOutline",    true, "If enabled, then the schematic overlay will use the\nblock model quads/vertices instead of the\ntraditional full block overlay");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_MODEL_SIDES       = new ConfigBoolean("schematicOverlayModelSides",      true, "If enabled, then the schematic overlay will use the\nblock model quads/vertices instead of the\ntraditional full block overlay");
-        public static final ConfigDouble        SCHEMATIC_OVERLAY_OUTLINE_WIDTH     = new ConfigDouble( "schematicOverlayOutlineWidth",  1.0, 0, 64, "The line width of the block (model) outlines");
-        public static final ConfigDouble        SCHEMATIC_OVERLAY_OUTLINE_WIDTH_THROUGH = new ConfigDouble( "schematicOverlayOutlineWidthThrough",  3.0, 0, 64, "The line width of the block (model) outlines,\nwhen the overlay is rendered through blocks");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_RENDER_THROUGH    = new ConfigBoolean("schematicOverlayRenderThroughBlocks", false, "If enabled, then the schematic overlay will be rendered\nthrough blocks. This is probably only useful once you are\nfinished building and want to see any errors easier");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_TYPE_EXTRA        = new ConfigBoolean("schematicOverlayTypeExtra",       true, "Enables the schematic overlay for extra blocks");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_TYPE_MISSING      = new ConfigBoolean("schematicOverlayTypeMissing",     true, "Enables the schematic overlay for missing blocks");
-        public static final ConfigBoolean       SCHEMATIC_OVERLAY_TYPE_WRONG_BLOCK  = new ConfigBoolean("schematicOverlayTypeWrongBlock",  true, "Enables the schematic overlay for wrong blocks");
+        public static final ConfigBoolean       ENABLE_AREA_SELECTION_RENDERING     = new ConfigBoolean("enableAreaSelectionBoxesRendering", true, "Включить рендеринг полей выбора области", "Area Selection Boxes Rendering");
+        public static final ConfigBoolean       ENABLE_PLACEMENT_BOXES_RENDERING    = new ConfigBoolean("enablePlacementBoxesRendering", true, "Включить рендеринг блоков размещения схем", "Schematic Placement Boxes Rendering");
+        public static final ConfigBoolean       ENABLE_RENDERING                    = new ConfigBoolean("enableRendering", true, "Опция переключения основного рендеринга. Включает/выключает рендеринг ВСЕХ модов.", "All Rendering");
+        public static final ConfigBoolean       ENABLE_SCHEMATIC_BLOCKS             = new ConfigBoolean("enableSchematicBlocksRendering",  true, "Включает рендеринг блоков схемы.\n" +
+                "Отключение этой функции позволяет видеть только цветовое наложение", "Schematic Blocks Rendering");
+        public static final ConfigBoolean       ENABLE_SCHEMATIC_OVERLAY            = new ConfigBoolean("enableSchematicOverlay",  true, "Основная опция переключения для схемы\n" +
+                "рендеринг наложения блоков", "Schematic Overlay Rendering");
+        public static final ConfigBoolean       ENABLE_SCHEMATIC_RENDERING          = new ConfigBoolean("enableSchematicRendering", true, "Включить рендеринг схемы и наложения", "Schematic Rendering");
+        public static final ConfigDouble        GHOST_BLOCK_ALPHA                   = new ConfigDouble( "ghostBlockAlpha", 0.5, 0, 1, "Альфа-значение блоков-призраков,\n" +
+                "при рендеринге их как полупрозрачных.\n" +
+                "§6Примечание: §7Вам также необходимо отдельно включить полупрозрачный рендеринг,\n" +
+                "используя опцию 'renderBlocksAsTranslucent'!");
+        public static final ConfigBoolean       IGNORE_EXISTING_FLUIDS              = new ConfigBoolean("ignoreExistingFluids", false, "Если включено, то любые блоки жидкости игнорируются как \"лишние блоки\"\n" +
+                "и как \"неправильные блоки\", т.е. там, где в схеме есть воздушные или другие блоки.\n" +
+                "В принципе, это делает строительство под водой гораздо менее раздражающим.\n" +
+                "Примечание: Скорее всего, вы также захотите включить опцию 'renderCollidingSchematicBlocks'\n" +
+                "одновременно, чтобы блоки рендерились внутри жидкостей.");
+        public static final ConfigBoolean       OVERLAY_REDUCED_INNER_SIDES         = new ConfigBoolean("overlayReducedInnerSides", false, "Если включено, то смежные/касающиеся внутренние стороны\n" +
+                "для накладок блоков удаляются/не отображаются");
+        public static final ConfigDouble        PLACEMENT_BOX_SIDE_ALPHA            = new ConfigDouble( "placementBoxSideAlpha", 0.2, 0, 1, "Альфа-значение стороны боксов субрегиона");
+        public static final ConfigBoolean       RENDER_AREA_SELECTION_BOX_SIDES     = new ConfigBoolean("renderAreaSelectionBoxSides", true, "Если включено, то поля выбора области будут\n" +
+                "отображаться их боковые квадратики");
+        public static final ConfigBoolean       RENDER_BLOCKS_AS_TRANSLUCENT        = new ConfigBoolean("renderBlocksAsTranslucent", false, "Если включено, то схемы отображаются\n" +
+                "с использованием полупрозрачных \"призрачных блоков\"", "Translucent Schematic Block Rendering");
+        public static final ConfigBoolean       RENDER_COLLIDING_SCHEMATIC_BLOCKS   = new ConfigBoolean("renderCollidingSchematicBlocks", false, "Если включено, то блоки в схемах отображаются\n" +
+                "также если в мире клиента уже есть (неправильный) блок.\n" +
+                "Вероятно, это полезно в основном при попытке построить\n" +
+                "где на пути есть слои снега или воды.");
+        public static final ConfigBoolean       RENDER_ERROR_MARKER_CONNECTIONS     = new ConfigBoolean("renderErrorMarkerConnections", false, "Рендеринг соединительных линий между последующими углами хиллайтбокса верификатора.\n" +
+                "Это была ошибка рендеринга, с которой столкнулись некоторые люди, но, по крайней мере, некоторым игрокам\n" +
+                "понравился и они попросили оставить его, так что эта опция \"восстанавливает\" его.");
+        public static final ConfigBoolean       RENDER_ERROR_MARKER_SIDES           = new ConfigBoolean("renderErrorMarkerSides", true, "Если включено, то маркеры ошибок в верификаторе схем\n" +
+                "будут иметь (полупрозрачные) стороны, а не только контур");
+        public static final ConfigBoolean       RENDER_PLACEMENT_BOX_SIDES          = new ConfigBoolean("renderPlacementBoxSides", false, "Если эта опция включена, то помещенные в схему ячейки субрегионов\n" +
+                "будут отрисованы их боковые квадраты");
+        public static final ConfigBoolean       RENDER_PLACEMENT_ENCLOSING_BOX      = new ConfigBoolean("renderPlacementEnclosingBox", true, "Если включено, то вокруг\n" +
+                "всех субрегионов в схеме (размещение)");
+        public static final ConfigBoolean       RENDER_PLACEMENT_ENCLOSING_BOX_SIDES= new ConfigBoolean("renderPlacementEnclosingBoxSides", false, "Если включено, то окружающая рамка вокруг\n" +
+                "вокруг размещения схемы будут отображаться ее боковые квадратики");
+        public static final ConfigBoolean       RENDER_TRANSLUCENT_INNER_SIDES      = new ConfigBoolean("renderTranslucentBlockInnerSides", false, "Если включено, то стороны модели также отображаются\n" +
+                "для внутренних сторон в полупрозрачном режиме");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_ENABLE_OUTLINES   = new ConfigBoolean("schematicOverlayEnableOutlines",  true, "Включает рендеринг контура проволочного каркаса для\n" +
+                "наложения блока схемы", "Schematic Overlay Outlines");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_ENABLE_SIDES      = new ConfigBoolean("schematicOverlayEnableSides",     true, "Включает рендеринг полупрозрачных коробок/сторон для\n" +
+                "наложения блока схемы", "Schematic Overlay Sides");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_MODEL_OUTLINE     = new ConfigBoolean("schematicOverlayModelOutline",    true, "Если включено, то при наложении схемы будут использоваться\n" +
+                "квадраты/вертикали блочной модели вместо\n" +
+                "традиционного наложения полного блока");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_MODEL_SIDES       = new ConfigBoolean("schematicOverlayModelSides",      true, "Если включено, то при наложении схемы будут использоваться\n" +
+                "квадраты/вертикали блочной модели вместо\n" +
+                "традиционного наложения полного блока");
+        public static final ConfigDouble        SCHEMATIC_OVERLAY_OUTLINE_WIDTH     = new ConfigDouble( "schematicOverlayOutlineWidth",  1.0, 0, 64, "Ширина линии контуров блока (модели)");
+        public static final ConfigDouble        SCHEMATIC_OVERLAY_OUTLINE_WIDTH_THROUGH = new ConfigDouble("schematicOverlayOutlineWidthThrough",  3.0, 0, 64, "Ширина линии контуров блока (модели),\n" +
+                "когда наложение визуализируется через блоки");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_RENDER_THROUGH    = new ConfigBoolean("schematicOverlayRenderThroughBlocks", false, "Если включено, то схематическое наложение будет отображаться\n" +
+                "через блоки. Это может быть полезно только после того, как вы\n" +
+                " закончили и хотите увидеть все ошибки более легко.");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_TYPE_EXTRA        = new ConfigBoolean("schematicOverlayTypeExtra",       true, "Включает наложение схемы для дополнительных блоков");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_TYPE_MISSING      = new ConfigBoolean("schematicOverlayTypeMissing",     true, "Включает наложение схемы для отсутствующих блоков");
+        public static final ConfigBoolean       SCHEMATIC_OVERLAY_TYPE_WRONG_BLOCK  = new ConfigBoolean("schematicOverlayTypeWrongBlock",  true, "Включает наложение схемы для неправильных блоков");
         public static final ConfigBoolean       SCHEMATIC_OVERLAY_TYPE_WRONG_STATE  = new ConfigBoolean("schematicOverlayTypeWrongState",  true, "Enables the schematic overlay for wrong states");
-        public static final ConfigBoolean       SCHEMATIC_VERIFIER_BLOCK_MODELS     = new ConfigBoolean("schematicVerifierUseBlockModels", false, "Forces using blocks models for everything in the Schematic Verifier\nresult list. Normally item models are used for anything\nthat has an item, and block models are only used for blocks\nthat don't have an item, plus for Flower Pots to see the contained item.");
+        public static final ConfigBoolean       SCHEMATIC_VERIFIER_BLOCK_MODELS     = new ConfigBoolean("schematicVerifierUseBlockModels", false, "Заставляет использовать модели блоков для всего в Schematic Verifier\n" +
+                "списка результатов. Обычно модели элементов используются для всего, что\n" +
+                "имеет элемент, а модели блоков используются только для блоков.\n" +
+                "у которых нет элемента, плюс для цветочных горшков, чтобы увидеть содержащийся в них элемент.");
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 ENABLE_RENDERING,
@@ -226,32 +407,45 @@ public class Configs implements IConfigHandler
 
     public static class InfoOverlays
     {
-        public static final ConfigOptionList    BLOCK_INFO_LINES_ALIGNMENT          = new ConfigOptionList( "blockInfoLinesAlignment", HudAlignment.TOP_RIGHT, "The alignment of the block info lines overlay");
-        public static final ConfigBoolean       BLOCK_INFO_LINES_ENABLED            = new ConfigBoolean(    "blockInfoLinesEnabled", true, "If enabled, then MiniHUD-style block info overlay\nis rendered for the looked-at block");
-        public static final ConfigDouble        BLOCK_INFO_LINES_FONT_SCALE         = new ConfigDouble(     "blockInfoLinesFontScale", 0.5, 0, 10, "The font scale for the block info lines");
-        public static final ConfigInteger       BLOCK_INFO_LINES_OFFSET_X           = new ConfigInteger(    "blockInfoLinesOffsetX", 4, 0, 2000, "The x offset of the block info lines from the selected edge");
-        public static final ConfigInteger       BLOCK_INFO_LINES_OFFSET_Y           = new ConfigInteger(    "blockInfoLinesOffsetY", 4, 0, 2000, "The y offset of the block info lines from the selected edge");
-        public static final ConfigOptionList    BLOCK_INFO_OVERLAY_ALIGNMENT        = new ConfigOptionList( "blockInfoOverlayAlignment", BlockInfoAlignment.TOP_CENTER, "The alignment of the Block Info Overlay");
-        public static final ConfigInteger       BLOCK_INFO_OVERLAY_OFFSET_Y         = new ConfigInteger(    "blockInfoOverlayOffsetY", 6, -2000, 2000, "The y offset of the block info overlay from the selected edge");
-        public static final ConfigBoolean       BLOCK_INFO_OVERLAY_ENABLED          = new ConfigBoolean(    "blockInfoOverlayEnabled", true, "Enable Block Info Overlay rendering to show info\nabout the looked-at block or verifier error marker,\nwhile holding the 'renderInfoOverlay' key", "Block Info Overlay Rendering");
-        public static final ConfigOptionList    INFO_HUD_ALIGNMENT                  = new ConfigOptionList( "infoHudAlignment", HudAlignment.BOTTOM_RIGHT, "The alignment of the \"Info HUD\",\nused for the Material List, Schematic Verifier mismatch positions etc.");
-        public static final ConfigInteger       INFO_HUD_MAX_LINES                  = new ConfigInteger(    "infoHudMaxLines", 10, 1, 128, "The maximum number of info lines to show on the HUD at once");
-        public static final ConfigInteger       INFO_HUD_OFFSET_X                   = new ConfigInteger(    "infoHudOffsetX", 1, 0, 32000, "The X offset of the Info HUD from the screen edge");
-        public static final ConfigInteger       INFO_HUD_OFFSET_Y                   = new ConfigInteger(    "infoHudOffsetY", 1, 0, 32000, "The Y offset of the Info HUD from the screen edge");
-        public static final ConfigDouble        INFO_HUD_SCALE                      = new ConfigDouble(     "infoHudScale", 1, 0.1, 4, "Scale factor for the generic Info HUD text");
-        public static final ConfigBoolean       INFO_OVERLAYS_TARGET_FLUIDS         = new ConfigBoolean(    "infoOverlaysTargetFluids", false, "When enabled, the Block Info Overlay and Block Info Lines\nwill be able to ray trace to fluid blocks instead of going through them");
-        public static final ConfigInteger       MATERIAL_LIST_HUD_MAX_LINES         = new ConfigInteger(    "materialListHudMaxLines", 10, 1, 128, "The maximum number of items to show on\nthe Material List Info HUD at once");
-        public static final ConfigDouble        MATERIAL_LIST_HUD_SCALE             = new ConfigDouble(     "materialListHudScale", 1, 0.1, 4, "Scale factor for the Material List Info HUD");
-        public static final ConfigBoolean       STATUS_INFO_HUD                     = new ConfigBoolean(    "statusInfoHud", false, "Enable a status info HUD renderer,\nwhich renders a few bits of status info, such as\nthe current layer mode and renderers enabled state");
-        public static final ConfigBoolean       STATUS_INFO_HUD_AUTO                = new ConfigBoolean(    "statusInfoHudAuto", true, "Allow automatically momentarily enabling the status info HUD \"when needed\",\nfor example when creating a placement and having rendering disabled");
-        public static final ConfigOptionList    TOOL_HUD_ALIGNMENT                  = new ConfigOptionList( "toolHudAlignment", HudAlignment.BOTTOM_LEFT, "The alignment of the \"tool HUD\", when holding the configured \"tool\"");
-        public static final ConfigInteger       TOOL_HUD_OFFSET_X                   = new ConfigInteger(    "toolHudOffsetX", 1, 0, 32000, "The X offset of the Info HUD from the screen edge");
-        public static final ConfigInteger       TOOL_HUD_OFFSET_Y                   = new ConfigInteger(    "toolHudOffsetY", 1, 0, 32000, "The X offset of the Info HUD from the screen edge");
-        public static final ConfigDouble        TOOL_HUD_SCALE                      = new ConfigDouble(     "toolHudScale", 1, 0.1, 4, "Scale factor for the Tool HUD text");
-        public static final ConfigDouble        VERIFIER_ERROR_HILIGHT_ALPHA        = new ConfigDouble(     "verifierErrorHilightAlpha", 0.2, 0, 1, "The alpha value of the error marker box sides");
-        public static final ConfigInteger       VERIFIER_ERROR_HILIGHT_MAX_POSITIONS = new ConfigInteger(   "verifierErrorHilightMaxPositions", 1000, 1, 1000000, "The maximum number of mismatched positions to render\nat once in the Schematic Verifier overlay.");
-        public static final ConfigBoolean       VERIFIER_OVERLAY_ENABLED            = new ConfigBoolean(    "verifierOverlayEnabled", true, "Enable Schematic Verifier marker overlay rendering", "Verifier Overlay Rendering");
-        public static final ConfigBoolean       WARN_DISABLED_RENDERING             = new ConfigBoolean(    "warnDisabledRendering", true, "Should the warning message about being in a layer mode\nor having some of the rendering options disabled\nbe shown when loading a new schematic\nor creating a new placement");
+        public static final ConfigOptionList    BLOCK_INFO_LINES_ALIGNMENT          = new ConfigOptionList("blockInfoLinesAlignment", HudAlignment.TOP_RIGHT, "Выравнивание наложения информационных линий блока");
+        public static final ConfigOptionList    BLOCK_INFO_OVERLAY_ALIGNMENT        = new ConfigOptionList("blockInfoOverlayAlignment", BlockInfoAlignment.TOP_CENTER, "Выравнивание информационной накладки блока");
+        public static final ConfigOptionList    INFO_HUD_ALIGNMENT                  = new ConfigOptionList("infoHudAlignment", HudAlignment.BOTTOM_RIGHT, "Выравнивание \"Info HUD\",\n" +
+                "используемого для списка материалов, позиций несоответствия верификатора схем и т.д.");
+        public static final ConfigOptionList    TOOL_HUD_ALIGNMENT                  = new ConfigOptionList("toolHudAlignment", HudAlignment.BOTTOM_LEFT, "Выравнивание \" tool HUD\", при удержании настроенного \"инструмента\"");
+
+        public static final ConfigBoolean       BLOCK_INFO_LINES_ENABLED            = new ConfigBoolean("blockInfoLinesEnabled", true, "Если включено, то наложение информации о блоке в стиле MiniHUD\nбудет отображаться для просматриваемого блока");
+        public static final ConfigDouble        BLOCK_INFO_LINES_FONT_SCALE         = new ConfigDouble( "blockInfoLinesFontScale", 0.5, 0, 10, "Масштаб шрифта для информационных строк блока");
+        public static final ConfigInteger       BLOCK_INFO_LINES_OFFSET_X           = new ConfigInteger("blockInfoLinesOffsetX", 4, 0, 2000, "Смещение x информационных строк блока от выбранного края");
+        public static final ConfigInteger       BLOCK_INFO_LINES_OFFSET_Y           = new ConfigInteger("blockInfoLinesOffsetY", 4, 0, 2000, "Смещение по оси y информационных строк блока от выбранного края");
+        public static final ConfigInteger       BLOCK_INFO_OVERLAY_OFFSET_Y         = new ConfigInteger("blockInfoOverlayOffsetY", 6, -2000, 2000, "Смещение по оси y наложения информации о блоке от выбранного края");
+        public static final ConfigBoolean       BLOCK_INFO_OVERLAY_ENABLED          = new ConfigBoolean("blockInfoOverlayEnabled", true, "Включите рендеринг наложения информации о блоке, чтобы показать информацию\n" +
+                "о просматриваемом блоке или маркере ошибки верификатора,\n" +
+                "удерживая клавишу 'renderInfoOverlay'", "Block Info Overlay Rendering");
+        public static final ConfigInteger       INFO_HUD_MAX_LINES                  = new ConfigInteger("infoHudMaxLines", 10, 1, 128, "Максимальное количество информационных строк, отображаемых на HUD одновременно");
+        public static final ConfigInteger       INFO_HUD_OFFSET_X                   = new ConfigInteger("infoHudOffsetX", 1, 0, 32000, "Смещение по оси X информационного HUD от края экрана");
+        public static final ConfigInteger       INFO_HUD_OFFSET_Y                   = new ConfigInteger("infoHudOffsetY", 1, 0, 32000, "Смещение по Y информационного HUD от края экрана");
+        public static final ConfigDouble        INFO_HUD_SCALE                      = new ConfigDouble( "infoHudScale", 1, 0.1, 4, "Коэффициент масштабирования для общего текста Info HUD");
+        public static final ConfigBoolean       INFO_OVERLAYS_TARGET_FLUIDS         = new ConfigBoolean("infoOverlaysTargetFluids", false, "Если эта функция включена, наложение информации о блоке и линии информации о блоке\n" +
+                "смогут проводить лучи к блокам жидкости вместо того, чтобы проходить через них");
+        public static final ConfigInteger       MATERIAL_LIST_HUD_MAX_LINES         = new ConfigInteger("materialListHudMaxLines", 10, 1, 128, "Максимальное количество элементов для отображения на\n" +
+                "HUD информации списка материалов одновременно");
+        public static final ConfigDouble        MATERIAL_LIST_HUD_SCALE             = new ConfigDouble( "materialListHudScale", 1, 0.1, 4, "Масштабный коэффициент для информационного HUD списка материалов");
+        public static final ConfigBoolean       STATUS_INFO_HUD                     = new ConfigBoolean("statusInfoHud", false, "Включите рендеринг HUD-информации о состоянии,\n" +
+                "который отображает несколько битов информации о состоянии, таких как\n" +
+                "текущий режим слоя и состояние включенного рендеринга");
+        public static final ConfigBoolean       STATUS_INFO_HUD_AUTO                = new ConfigBoolean("statusInfoHudAuto", true, "Разрешить автоматическое кратковременное включение HUD информации о статусе \"при необходимости\",\n" +
+                "например, при создании размещения и отключении рендеринга");
+        public static final ConfigInteger       TOOL_HUD_OFFSET_X                   = new ConfigInteger("toolHudOffsetX", 1, 0, 32000, "Смещение по оси X информационного HUD от края экрана");
+        public static final ConfigInteger       TOOL_HUD_OFFSET_Y                   = new ConfigInteger("toolHudOffsetY", 1, 0, 32000, "Смещение по оси X информационного HUD от края экрана");
+        public static final ConfigDouble        TOOL_HUD_SCALE                      = new ConfigDouble( "toolHudScale", 1, 0.1, 4, "Коэффициент масштабирования для текста Tool HUD");
+        public static final ConfigDouble        VERIFIER_ERROR_HILIGHT_ALPHA        = new ConfigDouble( "verifierErrorHilightAlpha", 0.2, 0, 1, "Альфа-значение сторон поля маркера ошибок");
+        public static final ConfigInteger       VERIFIER_ERROR_HILIGHT_MAX_POSITIONS= new ConfigInteger("verifierErrorHilightMaxPositions", 1000, 1, 1000000, "Максимальное количество несовпадающих позиций для отображения\n" +
+                "одновременно в оверлее Schematic Verifier.");
+        public static final ConfigBoolean       VERIFIER_OVERLAY_ENABLED            = new ConfigBoolean("verifierOverlayEnabled", true, "Включить рендеринг наложения маркеров Schematic Verifier", "Verifier Overlay Rendering");
+        public static final ConfigBoolean       WARN_DISABLED_RENDERING             = new ConfigBoolean("warnDisabledRendering", true, "Должно ли предупреждающее сообщение о том, что вы находитесь в режиме слоя\n" +
+                "или о том, что некоторые опции рендеринга отключены\n" +
+                "отображаться при загрузке новой схемы\n" +
+                "или при создании нового размещения");
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 BLOCK_INFO_LINES_ENABLED,
@@ -287,16 +481,16 @@ public class Configs implements IConfigHandler
 
     public static class Colors
     {
-        public static final ConfigColor AREA_SELECTION_BOX_SIDE_COLOR       = new ConfigColor("areaSelectionBoxSideColor",          "0x30FFFFFF", "The color of the area selection boxes, when they are unselected");
-        public static final ConfigColor HIGHTLIGHT_BLOCK_IN_INV_COLOR       = new ConfigColor("hightlightBlockInInventoryColor",    "#30FF30FF", "The highlight color for the item of the looked at block");
-        public static final ConfigColor MATERIAL_LIST_HUD_ITEM_COUNTS       = new ConfigColor("materialListHudItemCountsColor",     "0xFFFFAA00", "The color of the item count text in the Material List info HUD");
-        public static final ConfigColor REBUILD_BREAK_OVERLAY_COLOR         = new ConfigColor("schematicRebuildBreakPlaceOverlayColor", "0x4C33CC33", "The color of Schematic Rebuild mode's break or place blocks selector overlay");
-        public static final ConfigColor REBUILD_BREAK_EXCEPT_OVERLAY_COLOR  = new ConfigColor("schematicRebuildBreakExceptPlaceOverlayColor", "0x4CF03030", "The color of Schematic Rebuild mode's break all blocks except targeted selector overlay");
-        public static final ConfigColor REBUILD_REPLACE_OVERLAY_COLOR       = new ConfigColor("schematicRebuildReplaceOverlayColor",    "0x4CF0A010", "The color of Schematic Rebuild mode's replace selector overlay");
-        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_EXTRA       = new ConfigColor("schematicOverlayColorExtra",         "0x4CFF4CE6", "The color of the blocks overlay for extra blocks");
-        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_MISSING     = new ConfigColor("schematicOverlayColorMissing",       "0x2C33B3E6", "The color of the blocks overlay for missing blocks");
-        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_WRONG_BLOCK = new ConfigColor("schematicOverlayColorWrongBlock",    "0x4CFF3333", "The color of the blocks overlay for wrong blocks");
-        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_WRONG_STATE = new ConfigColor("schematicOverlayColorWrongState",    "0x4CFF9010", "The color of the blocks overlay for wrong block states");
+        public static final ConfigColor AREA_SELECTION_BOX_SIDE_COLOR       = new ConfigColor("areaSelectionBoxSideColor",          "#30FFFFFF", "Цвет полей выделения области, когда они не выделены");
+        public static final ConfigColor HIGHTLIGHT_BLOCK_IN_INV_COLOR       = new ConfigColor("hightlightBlockInInventoryColor",    "#30FF30FF", "Цвет подсветки для элемента просматриваемого блока");
+        public static final ConfigColor MATERIAL_LIST_HUD_ITEM_COUNTS       = new ConfigColor("materialListHudItemCountsColor",     "#FFFFAA00", "Цвет текста количества элементов в списке материалов в информации HUD");
+        public static final ConfigColor REBUILD_BREAK_OVERLAY_COLOR         = new ConfigColor("schematicRebuildBreakPlaceOverlayColor", "#4C33CC33", "Цвет наложения селектора разбиения или размещения блоков в режиме Schematic Rebuild");
+        public static final ConfigColor REBUILD_BREAK_EXCEPT_OVERLAY_COLOR  = new ConfigColor("schematicRebuildBreakExceptPlaceOverlayColor", "#4CF03030", "Цвет накладки режима Schematic Rebuild, разбивающей все блоки, кроме накладки целевого селектора");
+        public static final ConfigColor REBUILD_REPLACE_OVERLAY_COLOR       = new ConfigColor("schematicRebuildReplaceOverlayColor","#4CF0A010", "Цвет наложения селектора замены в режиме Schematic Rebuild");
+        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_EXTRA       = new ConfigColor("schematicOverlayColorExtra",         "#4CFF4CE6", "Цвет наложения блоков для дополнительных блоков");
+        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_MISSING     = new ConfigColor("schematicOverlayColorMissing",       "#2C33B3E6", "Цвет наложения блоков для отсутствующих блоков");
+        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_WRONG_BLOCK = new ConfigColor("schematicOverlayColorWrongBlock",    "#4CFF3333", "Цвет наложения блоков для неправильных блоков");
+        public static final ConfigColor SCHEMATIC_OVERLAY_COLOR_WRONG_STATE = new ConfigColor("schematicOverlayColorWrongState",    "#4CFF9010", "Цвет наложения блоков для неправильных состояний блоков");
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 AREA_SELECTION_BOX_SIDE_COLOR,
